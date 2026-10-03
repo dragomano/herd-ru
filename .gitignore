@@ -1,0 +1,33 @@
+# Зависимости
+node_modules/
+
+# Бинарные артефакты патчера: проприетарные файлы Herd (оригинал, сборка, распаковка).
+# Распространение извлечённых из Herd бинарников запрещено — см. README, раздел «Лицензия и статус»
+/backup/
+/build/
+/work/
+*.asar
+*.asar.orig
+
+# Генерируемые отчёты и извлечённые списки строк
+# (пересоздаются: patch.js apply/status, patches/extract-strings.js, extract2.js,
+#  extract3.js, filter-candidates.js, scan-bytecode.js)
+/patches/apply-report.json
+/patches/candidates.json
+/patches/candidates.txt
+/patches/all-remaining.txt
+/patches/fresh-strings.txt
+/patches/fresh-ui.txt
+/patches/ui-candidates.txt
+/patches/main-menu-strings.txt
+/patches/html-titles.txt
+
+# Логи
+*.log
+
+# Системные файлы и редакторы
+Thumbs.db
+Desktop.ini
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,38 @@
+{
+  "name": "herd-ru",
+  "version": "0.1",
+  "description": "Unofficial dictionary-driven patcher that translates the Laravel Herd for Windows interface into Russian.",
+  "main": "patch.js",
+  "scripts": {
+    "extract": "node patch.js extract",
+    "apply": "node patch.js apply",
+    "pack": "node patch.js pack",
+    "install-patch": "node patch.js install",
+    "restore": "node patch.js restore",
+    "status": "node patch.js status",
+    "launch": "node patch.js launch",
+    "patch": "npm run extract && npm run apply && npm run pack && npm run install-patch && npm run launch"
+  },
+  "keywords": [
+    "laravel-herd",
+    "herd",
+    "localization",
+    "i18n",
+    "russian",
+    "electron",
+    "asar",
+    "patcher",
+    "windows"
+  ],
+  "author": "Bugo",
+  "license": "MIT",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@electron/asar": "^4.3.1",
+    "acorn": "^8.18.0"
+  }
+}
