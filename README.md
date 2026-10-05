@@ -76,6 +76,8 @@ Get-FileHash 'backup\app.asar.orig' | Out-File 'backup\INFO.txt'
 | Путь | Назначение |
 |---|---|
 | `patch.js` | Патчер и все его команды |
+| `biome.json` | Настройки линтера и форматировщика JavaScript |
+| `.gitattributes` | Окончания строк LF для JS-файлов и конфигурации Biome |
 | `dict\ru.json` | Словарь интерфейса, заголовков и главного процесса |
 | `patches\` | Инструменты анализа, отчёты и эталон `unpacked-files.txt` |
 | `backup\` | Оригинальный архив и его SHA256 |
