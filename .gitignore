@@ -10,8 +10,7 @@ node_modules/
 *.asar.orig
 
 # Генерируемые отчёты и извлечённые списки строк
-# (пересоздаются: patch.js apply/status, patches/extract-strings.js, extract2.js,
-#  extract3.js, filter-candidates.js, scan-bytecode.js)
+# (пересоздаются: patch.js apply/status, patches/analyze-strings.js, scan-bytecode.js)
 /patches/apply-report.json
 /patches/candidates.json
 /patches/candidates.txt
