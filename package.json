@@ -4,6 +4,7 @@
   "description": "Unofficial dictionary-driven patcher that translates the Laravel Herd for Windows interface into Russian.",
   "main": "patch.js",
   "scripts": {
+    "test": "node --test \"tests/*.test.js\"",
     "lint": "biome lint --error-on-warnings .",
     "lint:fix": "biome lint --write --error-on-warnings .",
     "format": "biome format --write .",

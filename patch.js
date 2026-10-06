@@ -154,8 +154,7 @@ const matchPattern = (file, patterns) => {
   });
 };
 
-function buildLookup() {
-  const dict = JSON.parse(fs.readFileSync(DICT_PATH, 'utf8'));
+function buildLookup(dict = JSON.parse(fs.readFileSync(DICT_PATH, 'utf8'))) {
   const exact = new Map(); // точное содержимое литерала
   const trim = new Map(); // по trim(литерала) — с сохранением паддинга
 
@@ -185,10 +184,6 @@ function buildLookup() {
     fixes: dict.valueFixes || [],
   };
 }
-
-const SHIM_DICT = path.join(WORK_APP, 'out', 'main', 'ru-main-dict.json');
-const SHIM_JS = path.join(WORK_APP, 'out', 'main', 'ru-shim.js');
-const MAIN_INDEX = path.join(WORK_APP, 'out', 'main', 'index.js');
 
 const SHIM_SOURCE = `'use strict';
 // Herd RU shim — перевод строк главного процесса (меню трея, диалоги, уведомления).
@@ -368,13 +363,17 @@ const SHIM_SOURCE = `'use strict';
 })();
 `;
 
-function installMainShim(mainDict) {
+function installMainShim(mainDict, workApp = WORK_APP) {
   if (!mainDict) return;
 
-  fs.writeFileSync(SHIM_DICT, JSON.stringify(mainDict, null, 2));
-  fs.writeFileSync(SHIM_JS, SHIM_SOURCE);
+  const shimDict = path.join(workApp, 'out', 'main', 'ru-main-dict.json');
+  const shimJs = path.join(workApp, 'out', 'main', 'ru-shim.js');
+  const mainIndex = path.join(workApp, 'out', 'main', 'index.js');
 
-  let idx = fs.readFileSync(MAIN_INDEX, 'utf8');
+  fs.writeFileSync(shimDict, JSON.stringify(mainDict, null, 2));
+  fs.writeFileSync(shimJs, SHIM_SOURCE);
+
+  let idx = fs.readFileSync(mainIndex, 'utf8');
 
   if (!idx.includes('ru-shim')) {
     idx = idx.replace(/^['"]use strict['"];?\s*/, '');
@@ -382,7 +381,7 @@ function installMainShim(mainDict) {
       '"use strict";\nrequire("./ru-shim.js"); // Herd RU: перевод меню/диалогов/уведомлений\n' +
       idx;
 
-    fs.writeFileSync(MAIN_INDEX, idx);
+    fs.writeFileSync(mainIndex, idx);
 
     log('Главный процесс: установлен рантайм-шим (ru-shim.js + ru-main-dict.json)');
   }
@@ -453,12 +452,12 @@ function translateFile(src, lookup, chunkName, stats) {
   return out;
 }
 
-function cmdApply() {
-  if (!fs.existsSync(WORK_APP)) die('нет work/app — сначала выполните: node patch.js extract');
+function cmdApply({ workApp = WORK_APP, dictPath = DICT_PATH, reportPath = REPORT_PATH } = {}) {
+  if (!fs.existsSync(workApp)) die('нет work/app — сначала выполните: node patch.js extract');
 
-  const lookup = buildLookup();
-  const assetsDir = path.join(WORK_APP, 'out', 'renderer', 'assets');
-  const rendererDir = path.join(WORK_APP, 'out', 'renderer');
+  const lookup = buildLookup(JSON.parse(fs.readFileSync(dictPath, 'utf8')));
+  const assetsDir = path.join(workApp, 'out', 'renderer', 'assets');
+  const rendererDir = path.join(workApp, 'out', 'renderer');
 
   const stats = {
     total: 0,
@@ -546,10 +545,10 @@ function cmdApply() {
   }
 
   // 4) Шим главного процесса (меню трея, диалоги, уведомления из байткода)
-  installMainShim(lookup.main);
+  installMainShim(lookup.main, workApp);
 
   // 4) Отчёт: использованные и неиспользованные ключи
-  const allKeys = Object.keys(JSON.parse(fs.readFileSync(DICT_PATH, 'utf8')).translations);
+  const allKeys = Object.keys(JSON.parse(fs.readFileSync(dictPath, 'utf8')).translations);
   const unused = allKeys.filter(k => !stats.usedKeys.has(k));
   const report = {
     date: new Date().toISOString(),
@@ -560,8 +559,8 @@ function cmdApply() {
     unusedKeys: unused,
   };
 
-  fs.mkdirSync(path.dirname(REPORT_PATH), { recursive: true });
-  fs.writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2));
+  fs.mkdirSync(path.dirname(reportPath), { recursive: true });
+  fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
 
   log(
     'Заменено строк: ' +
@@ -577,23 +576,25 @@ function cmdApply() {
   if (unused.length)
     log('Ключи словаря без совпадений (' + unused.length + '): ' + unused.join(', '));
 
-  log('Полный отчёт: ' + REPORT_PATH);
+  log('Полный отчёт: ' + reportPath);
 }
 
-async function cmdPack() {
-  if (!fs.existsSync(WORK_APP)) die('нет work/app — сначала extract + apply');
+async function cmdPack({ workApp = WORK_APP, buildDir = BUILD_DIR } = {}) {
+  if (!fs.existsSync(workApp)) die('нет work/app — сначала extract + apply');
 
-  fs.rmSync(BUILD_DIR, { recursive: true, force: true });
-  fs.mkdirSync(BUILD_DIR, { recursive: true });
+  const buildAsar = path.join(buildDir, 'app.asar');
 
-  log('Собираю ' + BUILD_ASAR + ' (unpacked: ' + UNPACK_GLOB + ')...');
+  fs.rmSync(buildDir, { recursive: true, force: true });
+  fs.mkdirSync(buildDir, { recursive: true });
 
-  await asar.createPackageWithOptions(WORK_APP, BUILD_ASAR, {
+  log('Собираю ' + buildAsar + ' (unpacked: ' + UNPACK_GLOB + ')...');
+
+  await asar.createPackageWithOptions(workApp, buildAsar, {
     unpack: UNPACK_GLOB,
     unpackDir: UNPACK_DIR_GLOB,
   });
 
-  const upDir = BUILD_ASAR + '.unpacked';
+  const upDir = buildAsar + '.unpacked';
   const nUp = fs.existsSync(upDir)
     ? (function count(dir) {
         let n = 0;
@@ -609,9 +610,9 @@ async function cmdPack() {
 
   log(
     'Готово: ' +
-      BUILD_ASAR +
+      buildAsar +
       ' (' +
-      (fs.statSync(BUILD_ASAR).size / 1048576).toFixed(1) +
+      (fs.statSync(buildAsar).size / 1048576).toFixed(1) +
       ' МБ), unpacked-файлов: ' +
       nUp,
   );
@@ -759,21 +760,25 @@ function cmdLaunch() {
 }
 
 /* ------------------------------ main ------------------------------ */
-const cmd = process.argv[2] || 'status';
-(
-  ({
-    extract: cmdExtract,
-    apply: cmdApply,
-    pack: cmdPack,
-    install: cmdInstall,
-    restore: cmdRestore,
-    status: cmdStatus,
-    launch: cmdLaunch,
-  })[cmd] ||
-  (() =>
-    die(
-      'неизвестная команда: ' +
-        cmd +
-        '\nКоманды: extract, apply, pack, install, restore, status, launch',
-    ))
-)();
+if (require.main === module) {
+  const cmd = process.argv[2] || 'status';
+  (
+    ({
+      extract: cmdExtract,
+      apply: cmdApply,
+      pack: cmdPack,
+      install: cmdInstall,
+      restore: cmdRestore,
+      status: cmdStatus,
+      launch: cmdLaunch,
+    })[cmd] ||
+    (() =>
+      die(
+        'неизвестная команда: ' +
+          cmd +
+          '\nКоманды: extract, apply, pack, install, restore, status, launch',
+      ))
+  )();
+}
+
+module.exports = { buildLookup, translateFile, cmdApply, cmdPack };

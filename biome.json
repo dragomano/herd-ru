@@ -30,6 +30,16 @@
   },
   "overrides": [
     {
+      "includes": ["tests/translate.test.js"],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noTemplateCurlyInString": "off"
+          }
+        }
+      }
+    },
+    {
       "includes": ["patches/analyze-strings.js", "patches/inspect-strings.js"],
       "linter": {
         "rules": {
