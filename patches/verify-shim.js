@@ -14,7 +14,7 @@ try {
   const verifyDir = path.join(ROOT, 'build', 'verify2');
   fs.rmSync(verifyDir, { recursive: true, force: true });
   asar.extractAll(path.join(ROOT, 'build', 'app.asar'), verifyDir);
-  
+
   console.log(
     'index.js из сборки:',
     JSON.stringify(fs.readFileSync(path.join(verifyDir, 'out', 'main', 'index.js'), 'utf8')),

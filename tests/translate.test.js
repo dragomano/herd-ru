@@ -4,7 +4,7 @@ const assert = require('node:assert/strict');
 const { test } = require('node:test');
 const { buildLookup, translateFile } = require('../patch');
 
-function translate(source, translations, file = 'settings-AbCd1234.js') {
+function translate(source, translations, file = 'settings-AbCd1234.js', lookupOptions = null) {
   const stats = {
     usedKeys: new Set(),
     replacements: [],
@@ -12,7 +12,8 @@ function translate(source, translations, file = 'settings-AbCd1234.js') {
       this.replacements.push({ ru, chunk });
     },
   };
-  const output = translateFile(source, buildLookup({ translations }), file, stats);
+  const lookup = buildLookup({ ...lookupOptions, translations });
+  const output = translateFile(source, lookup, file, stats);
   return { output, stats };
 }
 
@@ -39,7 +40,9 @@ test('prefers an exact dictionary entry over its trimmed fallback', () => {
     ' Open ': ' Особый перевод ',
     Open: 'Открыть',
   });
-  assert.equal(output, 'const labels = [" Особый перевод ", "Открыть", "   Особый перевод   "];');
+  // Точная запись « Open » выигрывает для неё самой; для паддинговых вариантов
+  // trim-fallback берёт точную запись «Open», а не паддинговую.
+  assert.equal(output, 'const labels = [" Особый перевод ", "Открыть", "  Открыть  "];');
 });
 
 test('paddedOnly protects icon ligatures and translates padded UI labels', () => {
@@ -117,12 +120,58 @@ test('template segments do not bypass skipBefore or paddedOnly restrictions', ()
   assert.equal(output, source);
 });
 
+test('translates padded template segments via trimmed fallback', () => {
+  const { output } = translate('`Are you sure you want to delete PHP version ${name}`;', {
+    'Are you sure you want to delete PHP version ': 'Удалить версию PHP ',
+  });
+  assert.equal(output, '`Удалить версию PHP ${name}`;');
+});
+
+test('keeps identifier-like segments glued to interpolation intact', () => {
+  const source = 'const mods = `${m}Key`;';
+  assert.equal(translate(source, { Key: 'Ключ' }).output, source);
+  assert.equal(translate('`Key`', { Key: 'Ключ' }).output, '`Ключ`');
+});
+
+test('translates text nodes inside createStaticVNode html, leaving attributes intact', () => {
+  const { output, stats } = translate(
+    'const node = createStaticVNode("<div title=\\"Settings\\">Settings</div>");',
+    { Settings: 'Настройки' },
+  );
+  assert.equal(
+    output,
+    'const node = createStaticVNode("<div title=\\"Settings\\">Настройки</div>");',
+  );
+  assert.equal(stats.replacements.length, 1);
+});
+
+test('reports the dictionary key used for a padded replacement', () => {
+  const { stats } = translate('const label = "  Add Site  ";', { 'Add Site': 'Добавить сайт' });
+  assert.deepEqual([...stats.usedKeys], ['Add Site']);
+});
+
 test('preserves escaped sequences in literal replacements', () => {
   const english = String.raw`Say \"Hello\"`;
   const { output } = translate(String.raw`const label = "Say \"Hello\"";`, {
     [english]: String.raw`Скажи \"Привет\"`,
   });
   assert.equal(output, String.raw`const label = "Скажи \"Привет\"";`);
+});
+
+test('skips vendor chunks listed in skipChunks and honors custom skipChunks', () => {
+  const source = '"General"; const mods = `${m}Key`;';
+  const translations = { General: 'Общие', Key: 'Ключ' };
+  const opts = { skipChunks: ['vendor*'] };
+  assert.equal(translate(source, translations, 'vendor-runtime-dom.js', opts).output, source);
+  assert.equal(
+    translate(source, { ...translations }, 'runtime-dom.esm-bundler-AbCd1234.js').output,
+    source,
+  );
+  assert.equal(
+    translate(source, translations, 'app.js').output,
+    '"Общие"; const mods = `${m}Key`;',
+  );
+  assert.equal(translate(source, translations, 'vendor-app.js', opts).output, source);
 });
 
 test('records only matching and permitted replacements', () => {

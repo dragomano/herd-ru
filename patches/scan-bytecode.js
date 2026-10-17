@@ -21,7 +21,6 @@ function extractStrings(buf) {
     for (let i = align; i < buf.length - 1; i += 2) {
       const c = buf[i] | (buf[i + 1] << 8);
       if (c >= 32 && c < 127) cur += String.fromCharCode(c);
-
       else {
         if (cur.length >= 3) out.add(cur);
         cur = '';

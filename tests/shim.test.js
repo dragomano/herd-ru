@@ -123,6 +123,91 @@ test('shim preserves notification instances, static methods, and other options',
   assert.equal(notification.extra, extra);
 });
 
+test('shim translates ipcMain.handle results by exact matches only', async t => {
+  const registered = {};
+  const ipcMain = {
+    handle: t.mock.fn((channel, handler) => {
+      registered[channel] = handler;
+    }),
+  };
+  const { electron } = loadShim(t, { ipcMain });
+
+  electron.ipcMain.handle('demo:data', async () => ({
+    title: 'Open',
+    nested: { list: ['Open', 'Demo Logs', 42] },
+    when: new Date(0),
+    big: 'x'.repeat(5000),
+  }));
+
+  const result = await registered['demo:data']();
+
+  assert.equal(result.title, 'Открыть');
+  assert.deepEqual(result.nested.list, ['Открыть', 'Demo Logs', 42]);
+  assert.ok(result.when instanceof Date);
+  assert.equal(result.big, 'x'.repeat(5000));
+});
+
+test('shim translates webContents.send payloads by exact matches only', t => {
+  const created = [];
+  const app = {
+    getPath: () => process.env.APPDATA || '.',
+    on: t.mock.fn((event, callback) => {
+      if (event === 'web-contents-created') created.push(callback);
+    }),
+  };
+  loadShim(t, { app });
+  assert.ok(created.length >= 1);
+
+  const sent = [];
+  const wc = { send: (channel, payload) => sent.push([channel, payload]) };
+  created[created.length - 1]({}, wc);
+
+  wc.send('demo:push', { name: 'Open', items: ['Open'] });
+
+  assert.deepEqual(sent[0][1], { name: 'Открыть', items: ['Открыть'] });
+});
+
+test('shim translates synchronous IPC responses (event.returnValue)', t => {
+  const registered = {};
+  const ipcMain = {
+    handle: t.mock.fn(),
+    on: t.mock.fn((channel, handler) => {
+      registered[channel] = handler;
+    }),
+  };
+  const { electron } = loadShim(t, { ipcMain });
+
+  electron.ipcMain.on('demo:sync', event => {
+    event.returnValue = 'Open';
+  });
+
+  const event = { returnValue: null };
+  registered['demo:sync'](event);
+
+  assert.equal(event.returnValue, 'Открыть');
+});
+
+test('shim translates executeJavaScript code by exact dictionary entries', t => {
+  const created = [];
+  const app = {
+    getPath: () => process.env.APPDATA || '.',
+    on: t.mock.fn((event, callback) => {
+      if (event === 'web-contents-created') created.push(callback);
+    }),
+  };
+  loadShim(t, { app });
+
+  const executed = [];
+  const wc = { send: () => {}, executeJavaScript: code => executed.push(code) };
+  created[created.length - 1]({}, wc);
+
+  wc.executeJavaScript('window.__cfg = { hint: "Project Logs" };');
+  wc.executeJavaScript('window.x = 1;');
+
+  assert.match(executed[0], /Точный перевод/);
+  assert.doesNotMatch(executed[1], /Точный перевод/);
+});
+
 test('shim translates window constructor titles and setTitle while preserving this', t => {
   class BrowserWindow {
     static getAllWindows() {

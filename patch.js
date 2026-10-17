@@ -36,12 +36,35 @@ const DICT_PATH = path.join(ROOT, 'dict', 'ru.json');
 const REPORT_PATH = path.join(ROOT, 'patches', 'apply-report.json');
 
 // Что выносится за пределы asar (как в оригинальной сборке electron-builder).
+// Набор каталогов повторяет resources оригинального app.asar: в Herd 2.0 добавился
+// resources/cloud (herd-cloud-runner.php и др.) — без него эти файлы уедут внутрь
+// архива, и Herd не найдёт их на диске рядом с app.asar.
 // unpack — glob по абсолютному пути файла (префикс **/ обязателен);
-// unpackDir — glob по относительному пути каталога: помечает каталоги bin/config/valet
-// целиком, за счёт этого dot-файлы (nginx/temp/.ignore, valet/cli/.rnd) тоже выносятся,
-// потому что minimatch без опции dot не матчит их через **/.../**/.*.
-const UNPACK_GLOB = '{**/resources/{bin,config,valet}/**,**/resources/*.png}';
-const UNPACK_DIR_GLOB = 'resources/{bin,config,valet}/**';
+// unpackDir — glob по относительному пути каталога: помечает каталоги
+// bin/cloud/config/valet целиком, за счёт этого dot-файлы (nginx/temp/.ignore,
+// valet/cli/.rnd) тоже выносятся, потому что minimatch без опции dot не матчит
+// их через **/.../**/.*.
+const UNPACK_DIRS = '{bin,cloud,config,valet}';
+const UNPACK_GLOB = '{**/resources/' + UNPACK_DIRS + '/**,**/resources/*.png}';
+const UNPACK_DIR_GLOB = 'resources/' + UNPACK_DIRS + '/**';
+
+// Эталон состава app.asar.unpacked: patches/unpacked-files.txt (список относительных
+// путей). pack сверяет сборку с эталоном и сообщает о расхождениях.
+const UNPACKED_REF = path.join(ROOT, 'patches', 'unpacked-files.txt');
+
+// Чанки сторонних библиотек: UI-строк там нет, а английские литералы участвуют
+// в логике (например runtime-dom склеивает `${mod}Key` для ctrlKey/shiftKey).
+// Перевод в них ломает модификаторы мыши и телеметрию Sentry.
+// Список задаётся в словаре (секция skipChunks) и дополняется этим базовым набором.
+const BASE_SKIP_CHUNKS = [
+  'runtime-dom*',
+  'vue-router*',
+  'sentry*',
+  'style-*',
+  '_commonjsHelpers*',
+  '_plugin-vue_export-helper*',
+  'get-shader-color-from-string*',
+];
 
 const log = (...a) => console.log(...a);
 const die = msg => {
@@ -51,6 +74,20 @@ const die = msg => {
 
 function sha256(file) {
   return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+
+function listFiles(dir) {
+  const out = [];
+
+  (function walk(current, prefix) {
+    for (const e of fs.readdirSync(current, { withFileTypes: true })) {
+      const rel = prefix ? prefix + '/' + e.name : e.name;
+      if (e.isDirectory()) walk(path.join(current, e.name), rel);
+      else out.push(rel);
+    }
+  })(dir, '');
+
+  return out;
 }
 
 function herdVersionOf(asarFile) {
@@ -157,23 +194,31 @@ const matchPattern = (file, patterns) => {
 function buildLookup(dict = JSON.parse(fs.readFileSync(DICT_PATH, 'utf8'))) {
   const exact = new Map(); // точное содержимое литерала
   const trim = new Map(); // по trim(литерала) — с сохранением паддинга
+  const rawVals = new Map();
 
   for (const [en, valRaw] of Object.entries(dict.translations)) {
     const val =
       typeof valRaw === 'string'
-        ? { ru: valRaw, files: null }
+        ? { ru: valRaw, files: null, dictKey: en }
         : {
             ru: valRaw.ru,
-            files: valRaw.files,
+            files: typeof valRaw.files === 'string' ? [valRaw.files] : (valRaw.files ?? null),
             skipBefore: valRaw.skipBefore,
             paddedOnly: valRaw.paddedOnly,
+            dictKey: en,
           };
 
-    if (!val.paddedOnly && !exact.has(en)) exact.set(en, val);
+    rawVals.set(en, val);
 
+    if (!val.paddedOnly && !exact.has(en)) exact.set(en, val);
+  }
+
+  // Второй проход: для trim-поиска предпочитать запись с точным (непаддинговым)
+  // ключом, иначе паддинговая 1.x-версия перебивает её и портит отчёт usedKeys.
+  for (const en of rawVals.keys()) {
     const t = en.trim();
 
-    if (!trim.has(t)) trim.set(t, val);
+    if (!trim.has(t)) trim.set(t, exact.get(t) || rawVals.get(en));
   }
 
   return {
@@ -182,6 +227,7 @@ function buildLookup(dict = JSON.parse(fs.readFileSync(DICT_PATH, 'utf8'))) {
     titles: dict.htmlTitles || {},
     main: dict.mainProcess || null,
     fixes: dict.valueFixes || [],
+    skipChunks: [...BASE_SKIP_CHUNKS, ...(dict.skipChunks || [])],
   };
 }
 
@@ -269,7 +315,8 @@ const SHIM_SOURCE = `'use strict';
           var args = Array.prototype.slice.call(arguments);
 
           try {
-            var opts = (args[0] && typeof args[0] === 'object' && !Array.isArray(args[0])) ? args[0] : null;
+            var candidate = args[1] && typeof args[1] === 'object' && typeof args[1].message === 'string' ? args[1] : args[0];
+            var opts = (candidate && typeof candidate === 'object' && !Array.isArray(candidate)) ? candidate : null;
 
             if (opts) {
               ['title', 'message', 'detail', 'checkboxLabel'].forEach(function (k) {
@@ -316,6 +363,138 @@ const SHIM_SOURCE = `'use strict';
         electron.Notification = PatchedNotification;
       } catch (e) {}
     }
+
+    // Рекурсивный перевод данных, которые главный процесс отдаёт рендерерам
+    // через IPC (описания моделей диктовки и подобные). Только точные совпадения
+    // словаря, без регэкспов, ограниченная глубина и длина строки.
+    var PLAIN_CTORS = ['Buffer', 'Date', 'RegExp', 'ArrayBuffer', 'Error',
+      'Uint8Array', 'Uint16Array', 'Uint32Array', 'Int8Array', 'Float32Array', 'Float64Array'];
+
+    function deepTranslate(node, depth) {
+      if (node === null || node === undefined || depth > 6) return node;
+
+      if (typeof node === 'string') {
+        if (node.length < 2 || node.length > 4000) return node;
+        var ru = Object.prototype.hasOwnProperty.call(dict.exact, node) ? dict.exact[node] : node;
+        if (ru !== node) log('deep', node, ru);
+        return ru;
+      }
+
+      if (typeof node !== 'object') return node;
+
+      var ctor = node.constructor && node.constructor.name;
+      if (PLAIN_CTORS.indexOf(ctor) !== -1) return node;
+
+      if (Array.isArray(node)) {
+        for (var i = 0; i < node.length; i++) node[i] = deepTranslate(node[i], depth + 1);
+      } else {
+        for (var key in node) {
+          if (Object.prototype.hasOwnProperty.call(node, key)) {
+            node[key] = deepTranslate(node[key], depth + 1);
+          }
+        }
+      }
+
+      return node;
+    }
+
+    var ipcMain = electron.ipcMain;
+    if (ipcMain && typeof ipcMain.handle === 'function') {
+      var origHandle = ipcMain.handle.bind(ipcMain);
+
+      ipcMain.handle = function (channel, handler) {
+        if (typeof handler !== 'function') return origHandle(channel, handler);
+
+        return origHandle(channel, function () {
+          return Promise.resolve(handler.apply(this, arguments)).then(function (result) {
+            try { deepTranslate(result, 0); } catch (e) {}
+            flush();
+            return result;
+          });
+        });
+      };
+
+      // Синхронный IPC (ipcRenderer.sendSync): ответ кладётся в event.returnValue
+      // уже после возврата обработчика — перехватываем присваивание.
+      if (typeof ipcMain.on === 'function') {
+        var origOn = ipcMain.on.bind(ipcMain);
+
+        ipcMain.on = function (channel, handler) {
+          if (typeof handler !== 'function') return origOn(channel, handler);
+
+          return origOn(channel, function (event) {
+            var args = Array.prototype.slice.call(arguments);
+            log('ipc', channel);
+            flush();
+
+            if (event && typeof event === 'object') {
+              var wrapped = Object.create(event);
+
+              Object.defineProperty(wrapped, 'returnValue', {
+                set: function (value) {
+                  try { value = deepTranslate(value, 0); } catch (e) {}
+
+                  event.returnValue = value;
+                },
+                get: function () {
+                  return event.returnValue;
+                },
+              });
+              args[0] = wrapped;
+            }
+
+            return handler.apply(this, args);
+          });
+        };
+      }
+    }
+
+    // Push-каналы main -> renderer: описания и настройки приходят через wc.send
+    var app = electron.app;
+    if (app && typeof app.on === 'function') {
+      app.on('web-contents-created', function (event, wc) {
+        try {
+          if (!wc || typeof wc.send !== 'function') return;
+
+          var origSend = wc.send.bind(wc);
+
+          wc.send = function (channel, payload) {
+            log('send', channel);
+            try { deepTranslate(payload, 0); } catch (e) {}
+
+            flush();
+
+            return origSend(channel, payload);
+          };
+
+          // Инъекция кода: main вгоняет конфигурацию в окно строкой — заменяем
+          // внутри неё точные словарные строки (длиннее 9 символов).
+          if (typeof wc.executeJavaScript === 'function') {
+            var origExec = wc.executeJavaScript.bind(wc);
+
+            wc.executeJavaScript = function (code) {
+              try {
+                if (typeof code === 'string') {
+                  for (var en in dict.exact) {
+                    if (en.length < 10 || en.length > 4000 || en.indexOf('\\n') !== -1) continue;
+
+                    var ru = dict.exact[en];
+
+                    if (code.indexOf(en) !== -1) {
+                      log('exec', en, ru);
+                      code = code.split(en).join(ru);
+                    }
+                  }
+                }
+              } catch (e) {}
+
+              return origExec(code);
+            };
+          }
+        } catch (e) {}
+      });
+    }
+    void app;
 
     // Заголовки окон: main-процесс задаёт их как опцию BrowserWindow ({title: name + " Logs"})
     // и через setTitle после загрузки страницы — перехватываем оба пути.
@@ -388,68 +567,95 @@ function installMainShim(mainDict, workApp = WORK_APP) {
 }
 
 function translateFile(src, lookup, chunkName, stats) {
-  const DQ = /"((?:[^"\\\n]|\\.)*)"/g;
+  if (lookup.skipChunks && matchPattern(chunkName, lookup.skipChunks)) return src;
 
-  let out = src.replace(DQ, (full, content, offset) => {
+  const edits = [];
+  const ast = acorn.parse(src, { ecmaVersion: 'latest', sourceType: 'module' });
+  function replaceText(content, offset, template = false, guarded = false) {
+    // «Голый» идентификатор, склеенный с интерполяцией (`${mod}Key`), — это код,
+    // а не пользовательский текст; перевод ломает логику (ctrlKey, shiftKey...).
+    if (template && guarded && /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(content)) return content;
     let val = lookup.exact.get(content);
     let key = content;
     let trimmed = false;
-
     if (!val) {
-      const t = content.trim();
-      if (t && t !== content) {
-        val = lookup.trim.get(t);
-        key = t;
+      key = content.trim();
+      if (key && key !== content) {
+        val = lookup.trim.get(key);
         trimmed = true;
       }
     }
-
-    if (!val) return full;
-    if (!matchPattern(chunkName, val.files)) return full;
-
-    // skipBefore: пропустить, если перед литералом стоит указанный контекст (защита openSettings("General"))
+    if (!val || !matchPattern(chunkName, val.files)) return content;
     if (val.skipBefore) {
-      const before = src.slice(Math.max(0, offset - 40), offset);
+      if (template) return content;
       const markers = Array.isArray(val.skipBefore) ? val.skipBefore : [val.skipBefore];
-      if (markers.some(mk => before.endsWith(mk))) return full;
+      if (markers.some(marker => src.slice(0, offset).endsWith(marker))) return content;
     }
-
-    const ru = trimmed ? content.replace(content.trim(), val.ru) : val.ru;
-
     stats.count(val.ru, chunkName);
-    stats.usedKeys.add(key);
-
-    return '"' + ru + '"';
-  });
-
-  // Статические сегменты template-литералов: `текст ${x} текст`
-  const TPL = /`((?:[^`\\]|\\.)*)`/g;
-
-  out = out.replace(TPL, (full, inner) => {
-    const parts = inner.split(/(\$\{[^}]*\})/g);
-
-    let changed = false;
-
-    const mapped = parts.map(p => {
-      if (p.startsWith('${')) return p;
-
-      const val = lookup.exact.get(p);
-
-      if (val && matchPattern(chunkName, val.files) && !val.skipBefore) {
-        stats.count(val.ru, chunkName);
-        stats.usedKeys.add(p);
-        changed = true;
-
-        return val.ru;
+    stats.usedKeys.add(val.dictKey || key);
+    // У паддинговых 1.x-дублей и их непаддинговых «близнецов» общий текст —
+    // помечаем оба, если в словаре есть запись по обрезанному ключу,
+    // иначе отчёт показывает фантомно неиспользованные записи.
+    const sibling = content.trim();
+    if (sibling !== (val.dictKey || key) && lookup.exact.has(sibling)) {
+      stats.usedKeys.add(sibling);
+    }
+    return trimmed ? content.replace(content.trim(), val.ru) : val.ru;
+  }
+  function walk(node, parent, ancestors) {
+    if (!node || typeof node.type !== 'string') return;
+    const structural =
+      parent &&
+      ((parent.type === 'Property' && parent.key === node && !parent.computed) ||
+        (parent.type === 'MemberExpression' && parent.property === node) ||
+        parent.type === 'ImportDeclaration' ||
+        parent.type === 'ExportNamedDeclaration' ||
+        parent.type === 'ExportAllDeclaration' ||
+        parent.type === 'SwitchCase' ||
+        (parent.type === 'BinaryExpression' &&
+          ['===', '!==', '==', '!='].includes(parent.operator)));
+    const staticHtml =
+      parent &&
+      parent.type === 'CallExpression' &&
+      parent.arguments[0] === node &&
+      parent.callee.type === 'Identifier' &&
+      /^_?createStaticVNode(?:\$\d+)?$/.test(parent.callee.name);
+    const translateHtml = html =>
+      html.replace(
+        /(>)([^<>]+)(?=<)/g,
+        (_full, start, text) => start + replaceText(text, node.start),
+      );
+    if (!structural && node.type === 'Literal' && typeof node.value === 'string') {
+      const raw = src.slice(node.start + 1, node.end - 1);
+      const value = staticHtml ? translateHtml(raw) : replaceText(raw, node.start);
+      if (value !== raw) edits.push({ start: node.start + 1, end: node.end - 1, value });
+    }
+    if (
+      !structural &&
+      node.type === 'TemplateLiteral' &&
+      !ancestors.some(a => a.type === 'TaggedTemplateExpression')
+    ) {
+      const guarded = node.expressions.length > 0;
+      for (const quasi of node.quasis) {
+        const raw = src.slice(quasi.start, quasi.end);
+        const value = staticHtml
+          ? translateHtml(raw)
+          : replaceText(raw, quasi.start, true, guarded);
+        if (value !== raw) edits.push({ start: quasi.start, end: quasi.end, value });
       }
-
-      return p;
-    });
-
-    return changed ? '`' + mapped.join('') + '`' : full;
-  });
-
-  return out;
+    }
+    for (const [key, value] of Object.entries(node)) {
+      if (key === 'start' || key === 'end') continue;
+      if (Array.isArray(value)) for (const child of value) walk(child, node, [...ancestors, node]);
+      else if (value && typeof value === 'object') walk(value, node, [...ancestors, node]);
+    }
+  }
+  walk(ast, null, []);
+  let output = src;
+  for (const edit of edits.sort((a, b) => b.start - a.start)) {
+    output = output.slice(0, edit.start) + edit.value + output.slice(edit.end);
+  }
+  return output;
 }
 
 function cmdApply({ workApp = WORK_APP, dictPath = DICT_PATH, reportPath = REPORT_PATH } = {}) {
@@ -522,6 +728,8 @@ function cmdApply({ workApp = WORK_APP, dictPath = DICT_PATH, reportPath = REPOR
 
   if (valueFixes.length) {
     for (const f of fs.readdirSync(assetsDir).filter(f => f.endsWith('.js'))) {
+      if (matchPattern(f, lookup.skipChunks)) continue;
+
       const p = path.join(assetsDir, f);
       const src = fs.readFileSync(p, 'utf8');
       let fixed = src;
@@ -547,7 +755,7 @@ function cmdApply({ workApp = WORK_APP, dictPath = DICT_PATH, reportPath = REPOR
   // 4) Шим главного процесса (меню трея, диалоги, уведомления из байткода)
   installMainShim(lookup.main, workApp);
 
-  // 4) Отчёт: использованные и неиспользованные ключи
+  // 5) Отчёт: использованные и неиспользованные ключи
   const allKeys = Object.keys(JSON.parse(fs.readFileSync(dictPath, 'utf8')).translations);
   const unused = allKeys.filter(k => !stats.usedKeys.has(k));
   const report = {
@@ -595,18 +803,35 @@ async function cmdPack({ workApp = WORK_APP, buildDir = BUILD_DIR } = {}) {
   });
 
   const upDir = buildAsar + '.unpacked';
-  const nUp = fs.existsSync(upDir)
-    ? (function count(dir) {
-        let n = 0;
+  const builtFiles = fs.existsSync(upDir) ? listFiles(upDir) : [];
 
-        for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
-          if (e.isDirectory()) n += count(path.join(dir, e.name));
-          else n++;
-        }
+  // Сверка с эталоном: файлы, которые оригинальная сборка держит вне asar.
+  // Расхождение означает, что glob отстал от новой версии Herd — такие файлы
+  // окажутся внутри архива и приложение их не найдёт.
+  let mismatch = null;
 
-        return n;
-      })(upDir)
-    : 0;
+  if (fs.existsSync(UNPACKED_REF) && fs.existsSync(upDir)) {
+    // Пути внутри unpacked сохраняют корневой каталог resources.
+    const built = builtFiles.map(rel => rel.replace(/\\/g, '/')).sort();
+    const expected = fs
+      .readFileSync(UNPACKED_REF, 'utf8')
+      .split(/\r?\n/)
+      .map(s => s.trim())
+      .filter(Boolean)
+      .sort();
+    const missing = expected.filter(f => !built.includes(f));
+    const extra = built.filter(f => !expected.includes(f));
+
+    if (missing.length || extra.length) {
+      mismatch = { missing, extra };
+      log('  !! расхождение с эталоном ' + path.relative(ROOT, UNPACKED_REF));
+      for (const f of missing) log('     нет в сборке: ' + f);
+      for (const f of extra) log('     нет в эталоне: ' + f);
+      log('     обновите эталон или glob unpack (UNPACK_DIRS в patch.js)');
+    }
+  } else {
+    log('  !! эталон ' + UNPACKED_REF + ' не найден — сверка unpacked-файлов пропущена');
+  }
 
   log(
     'Готово: ' +
@@ -614,10 +839,9 @@ async function cmdPack({ workApp = WORK_APP, buildDir = BUILD_DIR } = {}) {
       ' (' +
       (fs.statSync(buildAsar).size / 1048576).toFixed(1) +
       ' МБ), unpacked-файлов: ' +
-      nUp,
+      builtFiles.length +
+      (mismatch ? '' : fs.existsSync(UNPACKED_REF) ? ' (совпадает с эталоном)' : ''),
   );
-
-  if (nUp !== 180) log('  !! ожидалось 180 unpacked-файлов как в оригинале — проверьте glob');
 }
 
 function cmdInstall() {
@@ -707,7 +931,7 @@ function cmdRestore() {
       );
     }
   }
-  
+
   const ok = sha256(INSTALLED_ASAR) === sha256(BACKUP_ASAR);
 
   if (!ok) die('восстановление не подтвердилось. Повторите restore от имени администратора.');
@@ -752,7 +976,7 @@ function cmdLaunch() {
       shell: 'cmd.exe',
       stdio: 'ignore',
     });
-    
+
     log('Herd запущен.');
   } catch (e) {
     die('не удалось запустить: ' + e.message);
