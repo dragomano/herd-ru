@@ -120,7 +120,9 @@ function stopHerd() {
   }
 
   for (let i = 0; i < 20 && isHerdRunning(); i++) {
-    execSync('timeout /t 1 /nobreak >nul', { stdio: 'ignore', shell: 'cmd.exe' });
+    // timeout.exe требует консольный ввод и завершается с кодом 125 при
+    // перенаправленном stdin — как пауза используем ping.
+    execSync('ping -n 2 127.0.0.1 >nul', { stdio: 'ignore', shell: 'cmd.exe' });
   }
 
   if (isHerdRunning()) {

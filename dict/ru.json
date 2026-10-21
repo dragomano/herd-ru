@@ -5461,6 +5461,7 @@
         "providerCatalog-*"
       ]
     },
+    "Describe your app to start building with a coding agent or leave empty to create a plain Laravel app": "Опишите приложение, чтобы начать разработку с агентом кодирования, или оставьте поле пустым для обычного Laravel-приложения.",
     "Build": {
       "ru": "Собрать",
       "files": [
@@ -14414,6 +14415,7 @@
         "providerCatalog-*"
       ]
     },
+    "Lets your coding agents see what your app did on every request: queries, logs, jobs, dumps and HTTP calls.": "Позволяет агентам видеть, что делало ваше приложение при каждом обращении: запросы, логи, задачи, дампы и HTTP-вызовы.",
     "Let Claude Code, Codex, Cursor and other coding agents use Herd's tools in every project.": {
       "ru": "Позвольте Claude Code, Codex, Cursor и другим агентам кодирования использовать инструменты Herd в каждом проекте.",
       "files": [
@@ -15764,6 +15766,7 @@
         "providerCatalog-*"
       ]
     },
+    "Connect an AI provider for agentic building or click Create App for a plain Laravel app": "Подключите поставщика ИИ для разработки с агентами или нажмите «Создать приложение» для обычного Laravel-приложения.",
     "Let's Go!": {
       "ru": "Поехали!",
       "files": [
@@ -17834,11 +17837,586 @@
         "settings-*",
         "menubar-*"
       ]
+    },
+    "Adds Herd's MCP server to this project's agent config": "Добавляет MCP-сервер Herd в конфигурацию агентов проекта",
+    "Could not load deployment information. Please check your connection.": "Не удалось загрузить сведения о развёртывании. Проверьте соединение.",
+    "Couldn't change the HTTPS setting.": "Не удалось изменить настройку HTTPS.",
+    "Couldn't install ": {
+      "ru": "Не удалось установить ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Couldn't switch the database.": "Не удалось переключить базу данных.",
+    "Couldn't switch the PHP version.": "Не удалось переключить версию PHP.",
+    "Couldn't update ": {
+      "ru": "Не удалось обновить ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Create and switch": {
+      "ru": "Создать и переключиться",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Create and switch to ": {
+      "ru": "Создать и переключиться на ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Creates ": {
+      "ru": "Создаёт ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "DB copy": {
+      "ru": "Копия БД",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Deploy to Laravel Forge": "Развернуть в Laravel Forge",
+    "Deploying to Forge…": "Развёртывание в Forge…",
+    "Herd couldn't list the databases on this server": "Herd не смог получить список баз данных на этом сервере",
+    "Loading databases on ": {
+      "ru": "Загрузка баз данных на ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Loading databases…": {
+      "ru": "Загрузка баз данных…",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Migrations and data changes in the workspace affect this site’s database.": "Миграции и изменения данных в рабочей области влияют на базу данных этого сайта.",
+    "No servers found in this organization.": "В этой организации не найдено серверов.",
+    "No sites found on this server.": "На этом сервере не найдено сайтов.",
+    "Open in Tinkerwell": {
+      "ru": "Открыть в Tinkerwell",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Open this project in Tinkerwell": "Открыть этот проект в Tinkerwell",
+    "Open Tinker": {
+      "ru": "Открыть Tinker",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Pick a database on this server, or create one:": "Выберите базу данных на этом сервере или создайте новую:",
+    "Pick the database on ": {
+      "ru": "Выберите базу данных на ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Points the site at ": {
+      "ru": "Направляет сайт на ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Rewrites DB_DATABASE to ": {
+      "ru": "Перезаписывает DB_DATABASE на ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Run php artisan tinker in a terminal": "Выполните php artisan tinker в терминале",
+    "Show all ": {
+      "ru": "Показать все ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Switch database": {
+      "ru": "Переключить базу данных",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Switch to ": {
+      "ru": "Переключиться на ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "The workspace could not be created.": "Не удалось создать рабочую область.",
+    "This server has no databases yet. Name the one to create:": "На этом сервере ещё нет баз данных. Укажите имя, чтобы создать:",
+    "Uses ": {
+      "ru": "Использует ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Uses this site’s database": {
+      "ru": "Использует базу данных этого сайта",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "a copy of this site’s database": {
+      "ru": "копию базы данных этого сайта",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "its own empty database": {
+      "ru": "собственную пустую базу данных",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "own DB": {
+      "ru": "Своя БД",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " Project default from herd.yml.": {
+      "ru": " По умолчанию из herd.yml.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "its domain and certificate": {
+      "ru": "его домен и сертификат",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "its domain, certificate, and files": {
+      "ru": "его домен, сертификат и файлы",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    ", and its database “": {
+      "ru": ", а также его база данных «",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "“": {
+      "ru": "«",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "” — ": {
+      "ru": "» — ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " is left untouched.": {
+      "ru": " остаётся нетронутой.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " on this server and points the site at it — ": {
+      "ru": " на этом сервере и направляет сайт на неё — ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    ". The app then reads and writes that data instead — ": {
+      "ru": ". Приложение будет читать и писать эти данные — ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    ". Pick a database there, or create one:": {
+      "ru": ". Выберите базу данных там или создайте новую:",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " doesn't exist on ": {
+      "ru": " отсутствует на ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " has no databases yet. Name the one to create:": {
+      "ru": " — баз данных пока нет. Укажите имя, чтобы создать:",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " this site should use:": {
+      "ru": " для этого сайта:",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " and points the site at it.": {
+      "ru": " и направляет сайт на неё.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    ". Settings → AI turns it on for every project.": {
+      "ru": ". Настройки → ИИ включают её для всех проектов.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " for ": {
+      "ru": " для ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " on ": {
+      "ru": " на ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " workspaces": {
+      "ru": " рабочих областей",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " are removed. Uncommitted changes are lost; the branch is kept in the parent repository.": {
+      "ru": " будут удалены. Незакоммиченные изменения потеряются; ветка остаётся в родительском репозитории.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " are removed and the git worktree is removed (git worktree remove --force). Uncommitted changes are lost; the branch stays in the repository.": {
+      "ru": " будут удалены, а git worktree удалён (git worktree remove --force). Незакоммиченные изменения потеряются; ветка остаётся в репозитории.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Capture is on, but without Herd Pro Herd drops what it captures and dump() output disappears from your pages. Click to turn capture off.": "Запись включена, но без Herd Pro Herd отбрасывает перехваченное, и вывод dump() исчезает со страниц. Нажмите, чтобы выключить запись.",
+    "Capturing for Insights and your coding agents. Click to pause.": "Идёт запись для диагностики и ваших агентов. Нажмите, чтобы приостановить.",
+    "Capturing requires Herd Pro. Click to get Herd Pro.": "Для записи нужен Herd Pro. Нажмите, чтобы получить Herd Pro.",
+    "Paused: neither Insights nor your coding agents get new activity. Click to start capturing.": "Пауза: ни диагностика, ни ваши агенты не получают новых событий. Нажмите, чтобы начать запись.",
+    "Start capturing": {
+      "ru": "Начать запись",
+      "files": [
+        "dumps-*"
+      ]
+    },
+    "Learn more": {
+      "ru": "Подробнее",
+      "files": [
+        "dumps-*"
+      ]
+    },
+    "Choose a site from the sidebar to browse its log files.": "Выберите сайт в боковой панели, чтобы просмотреть его лог-файлы.",
+    "No log entries match the selected levels.": "Нет записей, соответствующих выбранным уровням.",
+    "Find all entries with this ": {
+      "ru": "Найти все записи с этим ",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    " across the site's log files": {
+      "ru": " во всех лог-файлах сайта",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    " results across ": {
+      "ru": " результатов в ",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    " entries across ": {
+      "ru": " записей в ",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    " entries": {
+      "ru": " записей",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    "newest ": {
+      "ru": "последние ",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    "file": {
+      "ru": "файле",
+      "skipBefore": "\"selected-site-path\", ",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    "files": {
+      "ru": "файлах",
+      "skipBefore": "\"selected-site-path\", ",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    " files": {
+      "ru": " файлах",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    " unique": {
+      "ru": " уникальных",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    " hidden": {
+      "ru": " скрыто",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    "Hidden: \"": {
+      "ru": "Скрыто: «",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    "\" — click to show these entries again": {
+      "ru": "» — нажмите, чтобы снова показать эти записи",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    "No Results for “": {
+      "ru": "Нет результатов по «",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    "”": {
+      "ru": "»",
+      "files": [
+        "logViewer-*",
+        "ApplicationsInspector-*"
+      ]
+    },
+    "internal function": {
+      "ru": "внутренняя функция",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    "Connecting to Expose failed.": "Не удалось подключиться к Expose.",
+    "Connecting to Laravel Cloud failed.": "Не удалось подключиться к Laravel Cloud.",
+    "Could not save the service configuration": "Не удалось сохранить конфигурацию сервиса",
+    "Error writing to hosts file:": "Ошибка записи в файл hosts:",
+    "See what your app really does.": "Узнайте, чем на самом деле занимается ваше приложение.",
+    "See your emails instantly.": "Смотрите письма мгновенно.",
+    "Back to ": {
+      "ru": "Назад к ",
+      "files": [
+        "settings-*"
+      ]
+    },
+    "Setting up your Laravel app…": "Настройка вашего Laravel-приложения…",
+    "Creating workspace…": "Создание рабочей области…",
+    "Creating ": {
+      "ru": "Создание ",
+      "files": [
+        "applications-*"
+      ]
+    },
+    " workspaces…": {
+      "ru": " рабочих областей…",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Linking workspace…": "Привязка рабочей области…",
+    "Linking project…": "Привязка проекта…",
+    "Finishing up…": "Завершаем…",
+    "Preparing dictation…": "Подготовка диктовки…",
+    "Transcribing…": {
+      "ru": "Расшифровка…",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Stop dictation": "Остановить диктовку",
+    "Downloading the ": {
+      "ru": "Загрузка ",
+      "files": [
+        "applications-*"
+      ]
+    },
+    " speech model": {
+      "ru": " — модель распознавания речи",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "% — click to cancel": {
+      "ru": "% — нажмите, чтобы отменить",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Tab to use": {
+      "ru": "Tab — использовать",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "↑ Previous prompts": {
+      "ru": "↑ Предыдущие запросы",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Didn’t catch any speech. Try again.": "Речь не распознана. Попробуйте ещё раз.",
+    "Name your app": {
+      "ru": "Назовите приложение",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "New App": {
+      "ru": "Новое приложение",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "your app": {
+      "ru": "ваше приложение",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ".test is already taken.": {
+      "ru": " уже занят.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Site alias can only contain letters, numbers, hyphens, underscores, and periods.": "Псевдоним сайта может содержать только буквы, цифры, дефисы, подчёркивания и точки.",
+    "The folder couldn't be moved to the Recycle Bin, most likely because another program is using a file in it. Close it and try again. The site's configuration has not been changed.": "Не удалось переместить папку в корзину — вероятно, другая программа использует файл в ней. Закройте её и попробуйте снова. Конфигурация сайта не изменена.",
+    "Couldn't install the service.": "Не удалось установить сервис.",
+    "Herd couldn't unlink the site. Run \"herd unlink ": {
+      "ru": "Herd не смог отвязать сайт. Запустите \"herd unlink ",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "\" in a terminal to see why.": {
+      "ru": "\" в терминале, чтобы увидеть причину.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Enter the authorization code before continuing.": "Введите код авторизации, чтобы продолжить.",
+    "Connect with ": {
+      "ru": "Войти через ",
+      "files": [
+        "AiProviders-*"
+      ]
+    },
+    "No providers match \"": {
+      "ru": "Нет поставщиков по запросу «",
+      "files": [
+        "AiProviders-*"
+      ]
+    },
+    "\".": {
+      "ru": "».",
+      "files": [
+        "AiProviders-*"
+      ]
+    },
+    "We couldn't download PHP. Please check your internet connection and try again.": "Не удалось скачать PHP. Проверьте подключение к интернету и попробуйте снова.",
+    "The dictation was cancelled.": "Диктовка отменена.",
+    "The microphone was disconnected.": "Микрофон отключён.",
+    "Build an app that": {
+      "ru": "Создайте приложение, которое",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " tracks my daily workouts": {
+      "ru": " отслеживает мои тренировки",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " manages my freelance invoices": {
+      "ru": " ведёт мои счета фрилансера",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " plans meals for the week": {
+      "ru": " планирует питание на неделю",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "I'll add a pricing section to the welcome page.": {
+      "ru": "Добавлю на главную страницу раздел с тарифами.",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Default port": {
+      "ru": "Порт по умолчанию",
+      "files": [
+        "services-*"
+      ]
+    },
+    "Suggested · Default port in use": {
+      "ru": "Рекомендуется · Порт по умолчанию занят",
+      "files": [
+        "services-*"
+      ]
+    },
+    " The update couldn't be downloaded. Please try again. ": {
+      "ru": " Не удалось скачать обновление. Попробуйте ещё раз. ",
+      "files": [
+        "updater-*"
+      ]
     }
   },
   "valueFixes": [
     {
       "_readme": "Очередь разовых исправлений уже переведённых значений. Добавили фикс — поправьте тут же соответствующую запись в translations и удалите фикс. Фикс должен быть идемпотентным: to не должно содержать from, иначе повторные apply будут портить текст."
+    },
+    {
+      "_note": "Фиксы ниже — постоянные, а не разовые: 1) в шаблоне Herd число стоит до текста (… ${others} other coding agent…), поэтому подсказку MCP словарём не собрать; 2) подписи кнопок авторизации (method.label) и заголовки полей провайдеров (prompt.message) приходят из реестра OpenCode — их нет в файлах Herd, поэтому русский текст подставляется при отрисовке, ключи должны совпадать с реестром посимвольно (оригиналы — в resources/bin/opencode.exe). Если Herd или OpenCode изменят тексты, фиксы перестанут срабатывать: в логе apply будет «valueFixes применены в 0 файлах», а в интерфейсе вернётся английский текст."
+    },
+    {
+      "from": "agents.join(\" and \")",
+      "to": "agents.join(\" и \")"
+    },
+    {
+      "from": "and ${others} other coding agent${others === 1 ? \"\" : \"s\"}",
+      "to": "и других агентов кодирования (${others})"
+    },
+    {
+      "from": "oauthButtonTitle(method.label)",
+      "to": "oauthButtonTitle(({\"OpenCode Console account\":\"аккаунт OpenCode Console\",\"Sign in with ChatGPT\":\"аккаунт ChatGPT\",\"Login with GitHub Copilot\":\"аккаунт GitHub Copilot\",\"Login with DigitalOcean\":\"аккаунт DigitalOcean\",\"Login with GitLab (OAuth)\":\"аккаунт GitLab (OAuth)\",\"Login with Poe (browser)\":\"аккаунт Poe (браузер)\",\"Login with Snowflake (External Browser)\":\"аккаунт Snowflake (внешний браузер)\",\"SuperGrok Subscription\":\"подписку SuperGrok\",\"Codex browser (legacy)\":\"браузер Codex (устаревшее)\",\"Codex device code (legacy)\":\"код устройства Codex (устаревшее)\"})[method.label] ?? method.label)"
+    },
+    {
+      "from": "toDisplayString(prompt.message)",
+      "to": "toDisplayString(({\"Select GitHub deployment type\":\"Выберите тип развёртывания GitHub\",\"Enter your GitHub Enterprise URL or domain\":\"Введите URL или домен GitHub Enterprise\",\"Azure resource\":\"Ресурс Azure\",\"Enter Azure Resource Name\":\"Введите имя ресурса Azure\",\"Enter your Cloudflare AI Gateway ID\":\"Введите идентификатор Cloudflare AI Gateway\",\"Enter your Cloudflare Account ID\":\"Введите идентификатор аккаунта Cloudflare\",\"GitLab instance URL\":\"URL экземпляра GitLab\",\"Snowflake account\":\"Аккаунт Snowflake\",\"Snowflake role (optional)\":\"Роль Snowflake (необязательно)\"})[prompt.message] ?? prompt.message)"
     }
   ],
   "mainProcess": {
