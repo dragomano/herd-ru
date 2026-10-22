@@ -2,14 +2,18 @@
 'use strict';
 
 // Объединённый анализатор строк renderer. Режимы сохраняют старые отчёты:
-// candidates, fresh, remaining и filter.
+// candidates, fresh, remaining, filter и unused.
 const fs = require('fs');
 const path = require('path');
+const { readBytecodeStrings } = require('./bytecode-strings');
 
 const PROJ = path.join(__dirname, '..');
 const ROOT = path.join(PROJ, 'work', 'app');
 const ASSETS = path.join(ROOT, 'out', 'renderer', 'assets');
 const RENDERER = path.join(ROOT, 'out', 'renderer');
+const MAIN_BYTECODE = path.join(ROOT, 'out', 'main', 'index.jsc');
+const APPLY_REPORT = path.join(__dirname, 'apply-report.json');
+const DICT = path.join(PROJ, 'dict', 'ru.json');
 const OUT = __dirname;
 const DQ = /"((?:[^"\\\n]|\\.)*)"/g;
 const TPL = /`((?:[^`\\]|\\.)*)`/g;
@@ -252,7 +256,148 @@ function filterCandidates() {
   console.log('ui candidates:', out.length);
 }
 
-const mode = process.argv[2] || 'candidates';
+// Значения литералов и квази-сегментов шаблонов вместе с их видом: именно эти тексты
+// может заменить патчер, поэтому по ним проверяется, остался ли английский текст в коде.
+function collectKinds() {
+  const strings = new Map();
+  const add = (value, kind, file) => {
+    if (!strings.has(value)) strings.set(value, { kind, count: 0, files: new Set() });
+    const entry = strings.get(value);
+    entry.count++;
+    entry.files.add(file);
+  };
+
+  for (const file of jsFiles()) {
+    const src = fs.readFileSync(path.join(ASSETS, file), 'utf8');
+    let match;
+
+    DQ.lastIndex = 0;
+    while ((match = DQ.exec(src))) add(match[1], 'literal', file);
+
+    TPL.lastIndex = 0;
+    while ((match = TPL.exec(src))) {
+      for (const segment of match[1].split(/\$\{[^}]*\}/)) add(segment, 'template', file);
+    }
+  }
+
+  return strings;
+}
+
+function filesOf(entry) {
+  return [...entry.files].sort().map(f => f.replace(/-[A-Za-z0-9_-]{8}\.js/, ''));
+}
+
+// Раскладывает unusedKeys отчёта apply по действиям:
+//   onPage      — английский текст есть в чанках, но замена не применилась
+//                 (ключ объекта, case, сравнение или ограничение files/skipBefore);
+//   padding     — текст есть только без краевых пробелов: нужна запись без пробелов;
+//   mainProcess — строка живёт в байткоде главного процесса и шимом не покрыта;
+//   shimCovered — строку уже переводит шим: запись в translations лишняя;
+//   dead        — строки нет ни в чанках, ни в байткоде: запись можно удалить.
+function classifyUnused(keys, { texts, bytecode, shimExact, shimRules = [] }) {
+  const rules = shimRules.map(rule => new RegExp(rule.match));
+  const buckets = { onPage: [], padding: [], mainProcess: [], shimCovered: [], dead: [] };
+
+  for (const key of keys) {
+    const trimmed = key.trim();
+    const entry = texts.get(key);
+
+    if (entry) {
+      buckets.onPage.push({ key, kind: entry.kind, files: filesOf(entry) });
+      continue;
+    }
+
+    const trimmedEntry = trimmed !== key ? texts.get(trimmed) : null;
+
+    if (trimmedEntry) {
+      buckets.padding.push({
+        key,
+        found: trimmed,
+        kind: trimmedEntry.kind,
+        files: filesOf(trimmedEntry),
+      });
+      continue;
+    }
+
+    const bytecodeKey = bytecode.has(key) ? key : bytecode.has(trimmed) ? trimmed : null;
+
+    if (bytecodeKey) {
+      if (shimExact.has(bytecodeKey) || rules.some(re => re.test(bytecodeKey)))
+        buckets.shimCovered.push({ key, found: bytecodeKey });
+      else buckets.mainProcess.push({ key, found: bytecodeKey });
+      continue;
+    }
+
+    // Фрагмент более длинной строки байткода — признак того, что живая строка
+    // собирается из кусков, а точного совпадения со словарём у неё нет.
+    const container = [...bytecode].find(s => s.includes(trimmed) && s !== trimmed);
+
+    buckets.dead.push({ key, inside: container || null });
+  }
+
+  return buckets;
+}
+
+function writeUnused() {
+  if (!fs.existsSync(APPLY_REPORT))
+    throw new Error('Нет patches/apply-report.json. Сначала выполните node patch.js apply.');
+  if (!fs.existsSync(ASSETS))
+    throw new Error('Нет work/app. Сначала выполните node patch.js extract.');
+
+  const report = JSON.parse(fs.readFileSync(APPLY_REPORT, 'utf8'));
+  const dict = JSON.parse(fs.readFileSync(DICT, 'utf8'));
+  const main = dict.mainProcess || {};
+  const buckets = classifyUnused(report.unusedKeys, {
+    texts: collectKinds(),
+    bytecode: readBytecodeStrings(MAIN_BYTECODE),
+    shimExact: new Set(Object.keys(main.exact || {})),
+    shimRules: main.rules || [],
+  });
+
+  const titles = {
+    onPage: 'A. текст есть в чанках — замена не применилась (проверьте контекст)',
+    padding: 'B. текст есть без краевых пробелов — сверьте пару ключей в словаре',
+    mainProcess: 'C. строки главного процесса без шима (в mainProcess.exact или удалить)',
+    shimCovered: 'D. шим уже переводит эти строки (записи в translations лишние)',
+    dead: 'E. нигде не найдены (кандидаты на удаление)',
+  };
+  const lines = [
+    '# unusedKeys из patches/apply-report.json (снимок ' + report.date + ')',
+    '# Всего: ' + report.unusedKeys.length,
+  ];
+
+  for (const [bucket, title] of Object.entries(titles)) {
+    const items = buckets[bucket];
+    lines.push('', '# ' + title + ': ' + items.length);
+
+    for (const item of items) {
+      const note =
+        item.found !== undefined
+          ? '  <- ' + JSON.stringify(item.found)
+          : item.files
+            ? '  [' + item.kind + ': ' + item.files.join(',') + ']'
+            : '';
+
+      lines.push(
+        JSON.stringify(item.key) +
+          note +
+          (item.inside ? '  <- внутри ' + JSON.stringify(item.inside) : ''),
+      );
+    }
+  }
+
+  fs.writeFileSync(path.join(OUT, 'unused-keys.txt'), lines.join('\n') + '\n');
+  fs.writeFileSync(
+    path.join(OUT, 'unused-keys.json'),
+    JSON.stringify({ date: report.date, total: report.unusedKeys.length, buckets }, null, 1),
+  );
+
+  console.log('unusedKeys всего: ' + report.unusedKeys.length);
+  for (const [bucket, title] of Object.entries(titles))
+    console.log('  ' + title + ': ' + buckets[bucket].length);
+  console.log('отчёт: patches/unused-keys.txt, patches/unused-keys.json');
+}
+
 const modes = {
   candidates: writeCandidates,
   extract: writeCandidates,
@@ -260,34 +405,47 @@ const modes = {
   remaining: writeRemaining,
   filter: filterCandidates,
   'filter-candidates': filterCandidates,
+  unused: writeUnused,
+  'unused-keys': writeUnused,
   all: () => {
     writeCandidates();
     filterCandidates();
     writeFresh();
     writeRemaining();
+
+    // Отчёт apply нужен только этому режиму: без него остальные проверки полезны.
+    if (fs.existsSync(APPLY_REPORT)) writeUnused();
+    else console.log('unused: patches/apply-report.json нет — режим пропущен');
   },
 };
 
+const mode = process.argv[2] || 'candidates';
+
 function usage() {
   console.log(
-    'Использование: node patches/analyze-strings.js [candidates|filter|fresh|remaining|all]',
+    'Использование: node patches/analyze-strings.js [candidates|filter|fresh|remaining|unused|all]',
   );
   console.log(
     'По умолчанию: candidates. filter читает candidates.json, созданный режимом candidates.',
   );
-  console.log('Алиасы: extract = candidates, filter-candidates = filter.');
+  console.log('unused читает patches/apply-report.json и раскладывает unusedKeys по действиям.');
+  console.log('Алиасы: extract = candidates, filter-candidates = filter, unused-keys = unused.');
 }
 
-if (['--help', '-h', 'help'].includes(mode)) {
-  usage();
-} else if (!Object.hasOwn(modes, mode)) {
-  usage();
-  process.exitCode = 1;
-} else {
-  try {
-    modes[mode]();
-  } catch (error) {
-    console.error('Ошибка: ' + error.message);
+if (require.main === module) {
+  if (['--help', '-h', 'help'].includes(mode)) {
+    usage();
+  } else if (!Object.hasOwn(modes, mode)) {
+    usage();
     process.exitCode = 1;
+  } else {
+    try {
+      modes[mode]();
+    } catch (error) {
+      console.error('Ошибка: ' + error.message);
+      process.exitCode = 1;
+    }
   }
 }
+
+module.exports = { classifyUnused, collectKinds, writeUnused };

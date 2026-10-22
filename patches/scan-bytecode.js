@@ -1,35 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const ROOT = path.join(__dirname, '..');
-
-// Все печатаемые строки из байткода: ASCII (Latin-1, 1 байт) и UTF-16LE (оба выравнивания)
-function extractStrings(buf) {
-  const out = new Set();
-  let cur = '';
-  for (const c of buf) {
-    if (c >= 32 && c < 127) cur += String.fromCharCode(c);
-    else {
-      if (cur.length >= 3) out.add(cur);
-      cur = '';
-    }
-  }
-
-  if (cur.length >= 3) out.add(cur);
-
-  for (let align = 0; align < 2; align++) {
-    cur = '';
-    for (let i = align; i < buf.length - 1; i += 2) {
-      const c = buf[i] | (buf[i + 1] << 8);
-      if (c >= 32 && c < 127) cur += String.fromCharCode(c);
-      else {
-        if (cur.length >= 3) out.add(cur);
-        cur = '';
-      }
-    }
-  }
-
-  return out;
-}
+const { extractStrings } = require('./bytecode-strings');
 
 const b = fs.readFileSync(path.join(ROOT, 'work', 'app', 'out', 'main', 'index.jsc'));
 const all = extractStrings(b);

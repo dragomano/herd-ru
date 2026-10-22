@@ -92,7 +92,12 @@ function listFiles(dir) {
 
 function herdVersionOf(asarFile) {
   try {
+    // Заголовок архива кешируется по пути: install заменяет файл в том же процессе,
+    // и без сброса кеша версия читается из старого заголовка (получается '?').
+    asar.uncache(asarFile);
+
     const pkg = JSON.parse(asar.extractFile(asarFile, 'package.json'));
+
     return pkg.version;
   } catch {
     return '?';
@@ -132,6 +137,12 @@ function stopHerd() {
       /* ignore */
     }
   }
+
+  // Herd, запущенный с правами администратора, обычным taskkill не закрывается:
+  // добить его может только elevated-скрипт install/restore (первая строка там —
+  // taskkill /F), иначе после установки пользователь видит старую сборку.
+  if (isHerdRunning())
+    log('Herd не закрылся без прав администратора — закрою с повышением прав (UAC).');
 }
 
 function elevatedRun(scriptFile) {
@@ -167,21 +178,176 @@ function writeElevatedScript(name, lines) {
   return file;
 }
 
+/* --------------------------- резервная копия --------------------------- */
+
+const BACKUP_INFO = path.join(ROOT, 'backup', 'INFO.txt');
+
+// Маркер нашей сборки: ru-shim.js есть только в пропатченном архиве, поэтому по нему
+// установленный app.asar отличается от оригинала надёжнее, чем по хэшу build/app.asar
+// (сборку могли удалить или пересобрать заново). Путь собирается через path.join:
+// читалка asar делит имя записи по разделителю текущей платформы.
+const SHIM_MARKER = path.join('out', 'main', 'ru-shim.js');
+
+function isPatchedAsar(asarFile) {
+  try {
+    asar.extractFile(asarFile, SHIM_MARKER);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Откат на бэкап другой версии — это даунгрейд Herd; версия '?' означает, что
+// package.json архива не прочитался, и сравнивать нечего.
+function restoreConflict(installedVersion, backupVersion) {
+  const known = v => Boolean(v) && v !== '?';
+
+  return known(installedVersion) && known(backupVersion) && installedVersion !== backupVersion;
+}
+
+function backupInfoText({ version, hash, source, backup }) {
+  return (
+    [
+      'Herd version: ' + version,
+      'Date: ' + new Date().toISOString(),
+      'Algorithm: SHA256',
+      'Hash: ' + hash,
+      'Source: ' + source,
+      'Backup: ' + backup,
+    ].join('\r\n') + '\r\n'
+  );
+}
+
+// Снимок оригинального app.asar в backup/app.asar.orig. Вызывается перед extract и
+// install, поэтому после обновления Herd бэкап обновляется сам, без ручных шагов.
+// Копируется только архив: restore возвращает лишь его, а app.asar.unpacked собирается
+// заново при pack.
+// Возвращает: 'missing' | 'unknown' | 'same' | 'ours' | 'created'.
+function refreshOriginalBackup({
+  installedAsar = INSTALLED_ASAR,
+  buildAsar = BUILD_ASAR,
+  backupAsar = BACKUP_ASAR,
+  infoPath = BACKUP_INFO,
+  force = false,
+} = {}) {
+  if (!fs.existsSync(installedAsar)) {
+    log('Бэкап: установленный app.asar не найден — снимок не нужен.');
+    return 'missing';
+  }
+
+  const version = herdVersionOf(installedAsar);
+
+  if (version === '?') {
+    log('Бэкап: package.json установленного архива не читается — снимок не делаю.');
+    return 'unknown';
+  }
+
+  const installedHash = sha256(installedAsar);
+
+  if (fs.existsSync(backupAsar) && sha256(backupAsar) === installedHash) {
+    log(
+      'Бэкап актуален: backup/app.asar.orig уже совпадает с установленным (Herd ' + version + ').',
+    );
+    return 'same';
+  }
+
+  // Главная опасность автоматического снимка: повторный extract/install по уже
+  // пропатченному архиву затрёт единственный оригинал копией нашей же сборки.
+  const ours = fs.existsSync(buildAsar) && sha256(buildAsar) === installedHash;
+
+  if (!force && (ours || isPatchedAsar(installedAsar))) {
+    log(
+      'Бэкап: в Program Files уже наша сборка (Herd ' +
+        version +
+        ')' +
+        (fs.existsSync(backupAsar)
+          ? ' — оригинал не трогаю.'
+          : ' — бэкапа нет, а снимать пропатченный архив нельзя.'),
+    );
+    log('  Снимок именно этого архива: node patch.js backup --force');
+    return 'ours';
+  }
+
+  const previous = fs.existsSync(backupAsar) ? herdVersionOf(backupAsar) : null;
+  const tmp = backupAsar + '.tmp';
+
+  fs.mkdirSync(path.dirname(backupAsar), { recursive: true });
+  fs.copyFileSync(installedAsar, tmp);
+
+  // Копия проверяется до подмены: повреждённый снимок не должен вытеснить рабочий.
+  if (sha256(tmp) !== installedHash) {
+    fs.rmSync(tmp, { force: true });
+    die('копия бэкапа повреждена: SHA256 не совпал с исходным архивом (старый бэкап не тронут)');
+  }
+
+  fs.renameSync(tmp, backupAsar); // на Windows rename заменяет существующий файл
+  fs.writeFileSync(
+    infoPath,
+    backupInfoText({ version, hash: installedHash, source: installedAsar, backup: backupAsar }),
+  );
+
+  log(
+    'Бэкап ' +
+      (previous ? 'обновлён: Herd ' + previous + ' → ' + version : 'создан: Herd ' + version) +
+      ', sha256 ' +
+      installedHash.slice(0, 16) +
+      '... -> ' +
+      path.relative(ROOT, backupAsar),
+  );
+  log('  (app.asar.unpacked не копируется: restore возвращает только архив)');
+
+  return 'created';
+}
+
 /* ------------------------------ команды ------------------------------ */
 
+// Исходник для extract. Обычно это установленный архив, но если он уже пропатчен,
+// а в бэкапе лежит оригинал той же версии — берём бэкап: распаковка не должна
+// начинаться с нашей же сборки, иначе в work/app не будет английских строк, которые
+// сборка уже заменила, и отчёт apply (unusedKeys) станет бессмысленным.
+// Возвращает { file, why } или null, если распаковывать нечего.
+function pickExtractSource({ installedAsar = INSTALLED_ASAR, backupAsar = BACKUP_ASAR } = {}) {
+  if (!fs.existsSync(installedAsar)) {
+    return fs.existsSync(backupAsar)
+      ? { file: backupAsar, why: 'установленный архив не найден — распаковываю бэкап' }
+      : null;
+  }
+
+  const installedVersion = herdVersionOf(installedAsar);
+  const usableBackup =
+    fs.existsSync(backupAsar) &&
+    !isPatchedAsar(backupAsar) &&
+    Boolean(installedVersion) &&
+    installedVersion !== '?' &&
+    herdVersionOf(backupAsar) === installedVersion;
+
+  if (!usableBackup || !isPatchedAsar(installedAsar)) return { file: installedAsar, why: null };
+
+  return {
+    file: backupAsar,
+    why:
+      'в Program Files уже наша сборка (Herd ' +
+      installedVersion +
+      ') — распаковываю оригинал из backup/app.asar.orig',
+  };
+}
+
 function cmdExtract() {
-  const src = fs.existsSync(INSTALLED_ASAR) ? INSTALLED_ASAR : BACKUP_ASAR;
+  refreshOriginalBackup();
 
-  if (!fs.existsSync(src)) die('не найден ни установленный app.asar, ни бэкап');
+  const source = pickExtractSource();
 
-  log('Распаковываю ' + src + ' -> ' + WORK_APP);
+  if (!source) die('не найден ни установленный app.asar, ни бэкап');
+  if (source.why) log(source.why);
+
+  log('Распаковываю ' + source.file + ' -> ' + WORK_APP);
 
   fs.rmSync(WORK_APP, { recursive: true, force: true });
 
   // .unpacked-файлы берутся рядом с архивом (у установленного они есть)
-  asar.extractAll(src, WORK_APP);
+  asar.extractAll(source.file, WORK_APP);
 
-  log('Готово. Версия Herd: ' + herdVersionOf(src));
+  log('Готово. Версия Herd: ' + herdVersionOf(source.file));
 }
 
 const matchPattern = (file, patterns) => {
@@ -849,9 +1015,13 @@ async function cmdPack({ workApp = WORK_APP, buildDir = BUILD_DIR } = {}) {
 function cmdInstall() {
   if (!fs.existsSync(BUILD_ASAR)) die('нет build/app.asar — сначала pack');
 
+  refreshOriginalBackup();
   stopHerd();
 
   const script = writeElevatedScript('install.cmd', [
+    // Herd с правами администратора обычным taskkill не закрывается: закрываем здесь,
+    // иначе после установки останется висеть старая сборка.
+    'taskkill /F /IM Herd.exe >> "%LOG%" 2>&1',
     'copy /Y "' + BUILD_ASAR + '" "' + INSTALLED_ASAR + '" >> "%LOG%" 2>&1',
     'xcopy /E /I /Y "' +
       BUILD_ASAR +
@@ -904,12 +1074,43 @@ function cmdInstall() {
   log('Запустите Herd и проверьте интерфейс: node patch.js launch');
 }
 
-function cmdRestore() {
+function cmdBackup({ force = false } = {}) {
+  const status = refreshOriginalBackup({ force });
+
+  // Код возврата нужен скриптам: 0 — снимок сделан, актуален или уже есть;
+  // 1 — получить снимок не удалось, и бэкапа тоже нет.
+  if (status === 'created' || status === 'same') return;
+  if (status === 'ours' && fs.existsSync(BACKUP_ASAR)) return;
+
+  process.exitCode = 1;
+}
+
+function cmdRestore({ force = false } = {}) {
   if (!fs.existsSync(BACKUP_ASAR)) die('нет backup/app.asar.orig');
+
+  const installedVersion = fs.existsSync(INSTALLED_ASAR) ? herdVersionOf(INSTALLED_ASAR) : null;
+  const backupVersion = herdVersionOf(BACKUP_ASAR);
+
+  if (restoreConflict(installedVersion, backupVersion)) {
+    if (!force) {
+      die(
+        'бэкап от Herd ' +
+          backupVersion +
+          ', а установлен Herd ' +
+          installedVersion +
+          ' — восстановление откатит Herd до ' +
+          backupVersion +
+          '.\nЕсли это осознанно, повторите: node patch.js restore --force',
+      );
+    }
+
+    log('Внимание: откат Herd ' + installedVersion + ' → ' + backupVersion + ' (--force).');
+  }
 
   stopHerd();
 
   const script = writeElevatedScript('restore.cmd', [
+    'taskkill /F /IM Herd.exe >> "%LOG%" 2>&1',
     'copy /Y "' + BACKUP_ASAR + '" "' + INSTALLED_ASAR + '" >> "%LOG%" 2>&1',
   ]);
 
@@ -944,14 +1145,17 @@ function cmdRestore() {
 function cmdStatus() {
   log('Herd.exe запущен: ' + (isHerdRunning() ? 'да' : 'нет'));
 
+  const installedVersion = fs.existsSync(INSTALLED_ASAR) ? herdVersionOf(INSTALLED_ASAR) : null;
+
   if (fs.existsSync(INSTALLED_ASAR)) {
     const s = sha256(INSTALLED_ASAR);
     const same = fs.existsSync(BACKUP_ASAR) && s === sha256(BACKUP_ASAR);
-    const patched = fs.existsSync(BUILD_ASAR) && s === sha256(BUILD_ASAR);
+    const patched =
+      (fs.existsSync(BUILD_ASAR) && s === sha256(BUILD_ASAR)) || isPatchedAsar(INSTALLED_ASAR);
 
     log(
       'Установлен: Herd ' +
-        herdVersionOf(INSTALLED_ASAR) +
+        installedVersion +
         ', sha256 ' +
         s.slice(0, 16) +
         '... => ' +
@@ -959,8 +1163,28 @@ function cmdStatus() {
     );
   }
 
-  if (fs.existsSync(BACKUP_ASAR))
-    log('Бэкап: backup/app.asar.orig, sha256 ' + sha256(BACKUP_ASAR).slice(0, 16) + '...');
+  if (fs.existsSync(BACKUP_ASAR)) {
+    const backupVersion = herdVersionOf(BACKUP_ASAR);
+
+    log(
+      'Бэкап: backup/app.asar.orig, Herd ' +
+        backupVersion +
+        ', sha256 ' +
+        sha256(BACKUP_ASAR).slice(0, 16) +
+        '...',
+    );
+
+    if (restoreConflict(installedVersion, backupVersion))
+      log(
+        '  !! бэкап другой версии: установлен Herd ' +
+          installedVersion +
+          ', restore откатит до ' +
+          backupVersion +
+          ' — снимок обновится при extract/install',
+      );
+  } else {
+    log('Бэкап: нет (создастся автоматически при extract или install)');
+  }
 
   if (fs.existsSync(BUILD_ASAR))
     log('Сборка: build/app.asar, sha256 ' + sha256(BUILD_ASAR).slice(0, 16) + '...');
@@ -988,23 +1212,38 @@ function cmdLaunch() {
 /* ------------------------------ main ------------------------------ */
 if (require.main === module) {
   const cmd = process.argv[2] || 'status';
+  const force = process.argv.includes('--force');
+  const commands = {
+    extract: cmdExtract,
+    apply: cmdApply,
+    pack: cmdPack,
+    install: cmdInstall,
+    backup: () => cmdBackup({ force }),
+    restore: () => cmdRestore({ force }),
+    status: cmdStatus,
+    launch: cmdLaunch,
+  };
+
   (
-    ({
-      extract: cmdExtract,
-      apply: cmdApply,
-      pack: cmdPack,
-      install: cmdInstall,
-      restore: cmdRestore,
-      status: cmdStatus,
-      launch: cmdLaunch,
-    })[cmd] ||
+    commands[cmd] ||
     (() =>
       die(
         'неизвестная команда: ' +
           cmd +
-          '\nКоманды: extract, apply, pack, install, restore, status, launch',
+          '\nКоманды: extract, apply, pack, install, backup, restore, status, launch' +
+          '\n--force: restore — откат на бэкап другой версии, backup — снимок уже пропатченного архива',
       ))
   )();
 }
 
-module.exports = { buildLookup, translateFile, cmdApply, cmdPack };
+module.exports = {
+  buildLookup,
+  translateFile,
+  cmdApply,
+  cmdPack,
+  herdVersionOf,
+  isPatchedAsar,
+  pickExtractSource,
+  restoreConflict,
+  refreshOriginalBackup,
+};

@@ -20,6 +20,8 @@ node_modules/
 /patches/ui-candidates.txt
 /patches/main-menu-strings.txt
 /patches/html-titles.txt
+/patches/unused-keys.txt
+/patches/unused-keys.json
 
 # Логи
 *.log

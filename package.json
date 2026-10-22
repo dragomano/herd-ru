@@ -15,6 +15,7 @@
     "apply": "node patch.js apply",
     "pack": "node patch.js pack",
     "install-patch": "node patch.js install",
+    "backup": "node patch.js backup",
     "restore": "node patch.js restore",
     "status": "node patch.js status",
     "launch": "node patch.js launch",
