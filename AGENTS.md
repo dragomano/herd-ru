@@ -46,7 +46,7 @@
 ### Что проверять после `apply`
 
 `patches/apply-report.json`: `totalReplacements`, `changedJsFiles`, `htmlTitles`,
-`replacedKeys` и `unusedKeys`. Для Herd 2.0.3 эталон: 1353 замены в 25 чанках,
+`replacedKeys` и `unusedKeys`. Для Herd 2.0.4 эталон: 1364 замены в 25 чанках,
 11 заголовков, `unusedKeys` = только `["Downloading PHP ", "Local"]` (строки главного
 процесса, требуют ручного решения).
 

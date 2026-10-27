@@ -10,7 +10,7 @@
 
 ## Требования
 
-- Windows и Laravel Herd в `C:\Program Files\Herd` (проверено на 2.0.3).
+- Windows и Laravel Herd в `C:\Program Files\Herd` (проверено на 2.0.4).
 - Node.js **22.12+** (проверено на 24.x).
 
 ## Установка и обновление

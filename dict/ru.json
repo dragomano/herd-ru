@@ -23,6 +23,7 @@
     "Connect": "Подключить",
     "Connected": "Подключено",
     "Continue": "Продолжить",
+    "Continue?": "Продолжить?",
     "Copy mail .env": "Скопировать mail .env",
     "Create a new service": "Создать новый сервис",
     "Dashboard": "Дашборд",
@@ -210,6 +211,7 @@
     "Unlicensed": "Без лицензии",
     "Unpin": "Открепить",
     "Update Herd automatically": "Обновлять Herd автоматически",
+    "Update PHP": "Обновить PHP",
     "Update to Laravel Herd ": "Обновить до Laravel Herd ",
     "Updates": "Обновления",
     "Upgrade to Herd Pro": "Перейти на Herd Pro",
@@ -1192,6 +1194,9 @@
         "SortMenuFlyout-*"
       ]
     },
+    "Coding agents using Herd's MCP server lose their Herd tools until you restart them.": "Агенты кодирования, использующие MCP-сервер Herd, потеряют его инструменты до перезапуска.",
+    "is in use by Herd's MCP server in your coding agents. Updating stops it, and they lose their Herd tools until you restart them.": "используется MCP-сервером Herd в ваших агентах кодирования. Обновление остановит его, и агенты потеряют инструменты Herd до перезапуска.",
+    "is in use, for example by a dev server or queue worker. Updating stops these processes.": "уже используется, например, dev-сервером или воркером очереди. Обновление остановит эти процессы.",
     "is ready": {
       "ru": "готово",
       "files": [
