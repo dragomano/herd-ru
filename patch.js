@@ -22,6 +22,7 @@ const crypto = require('crypto');
 const { execSync } = require('child_process');
 const asar = require('@electron/asar');
 const acorn = require('acorn');
+const { readZip, writeZip } = require('./patches/zip');
 
 const HERD_DIR = 'C:/Program Files/Herd';
 const RESOURCES = path.join(HERD_DIR, 'resources');
@@ -51,6 +52,12 @@ const UNPACK_DIR_GLOB = 'resources/' + UNPACK_DIRS + '/**';
 // Эталон состава app.asar.unpacked: patches/unpacked-files.txt (список относительных
 // путей). pack сверяет сборку с эталоном и сообщает о расхождениях.
 const UNPACKED_REF = path.join(ROOT, 'patches', 'unpacked-files.txt');
+
+// Пути внутри unpacked, исключаемые из сверки с эталоном: локальные дополнения,
+// которых нет в оригинальной сборке Herd (например, ресурсы Adminer, которые
+// могут изменяться некоторыми пользователями). Такие каталоги не должны фигурировать ни в
+// эталоне, ни в предупреждениях о расхождении.
+const UNPACKED_IGNORE = ['resources/valet/adminer/**'];
 
 // Чанки сторонних библиотек: UI-строк там нет, а английские литералы участвуют
 // в логике (например runtime-dom склеивает `${mod}Key` для ctrlKey/shiftKey).
@@ -347,6 +354,9 @@ function cmdExtract() {
   // .unpacked-файлы берутся рядом с архивом (у установленного они есть)
   asar.extractAll(source.file, WORK_APP);
 
+  if (syncStudioWidgetFromInstalled())
+    log('Виджет Herd Studio: взята более новая версия из установленного app.asar.unpacked');
+
   log('Готово. Версия Herd: ' + herdVersionOf(source.file));
 }
 
@@ -394,6 +404,7 @@ function buildLookup(dict = JSON.parse(fs.readFileSync(DICT_PATH, 'utf8'))) {
     trim,
     titles: dict.htmlTitles || {},
     main: dict.mainProcess || null,
+    studio: dict.studio || {},
     fixes: dict.valueFixes || [],
     skipChunks: [...BASE_SKIP_CHUNKS, ...(dict.skipChunks || [])],
   };
@@ -787,7 +798,7 @@ function translateFile(src, lookup, chunkName, stats) {
       parent.type === 'CallExpression' &&
       parent.arguments[0] === node &&
       parent.callee.type === 'Identifier' &&
-      /^_?createStaticVNode(?:\$\d+)?$/.test(parent.callee.name);
+      /^(?:_?createStaticVNode(?:\$\d+)?|ji)$/.test(parent.callee.name);
     const translateHtml = html =>
       html.replace(
         /(>)([^<>]+)(?=<)/g,
@@ -824,6 +835,172 @@ function translateFile(src, lookup, chunkName, stats) {
     output = output.slice(0, edit.start) + edit.value + output.slice(edit.end);
   }
   return output;
+}
+
+function buildStudioLookup(studio = {}) {
+  const exact = new Map();
+  const trim = new Map();
+
+  for (const [en, valRaw] of Object.entries(studio)) {
+    if (en.startsWith('_')) continue;
+
+    let val;
+
+    if (typeof valRaw === 'string') {
+      val = { ru: valRaw, files: ['main-*'], dictKey: en };
+    } else {
+      const files =
+        valRaw.files == null
+          ? ['main-*']
+          : typeof valRaw.files === 'string'
+            ? [valRaw.files]
+            : valRaw.files;
+
+      val = { ru: valRaw.ru, files, skipBefore: valRaw.skipBefore, dictKey: en };
+    }
+
+    exact.set(en, val);
+
+    const t = en.trim();
+    if (!trim.has(t)) trim.set(t, val);
+  }
+
+  return { exact, trim, titles: {}, main: null, fixes: [], skipChunks: [] };
+}
+
+// Herd Studio — встроенный виджет, который Herd распаковывает из
+// resources/bin/herd-ai-widget.zip в ~/.config/herd/herd-ai-widget/versions/<ver>
+// и инжектит в страницы сайтов. Его строки не попадают ни в чанки рендерера, ни
+// в байткод главного процесса, поэтому в словаре для них отдельная секция studio.
+// Патчим сам zip в work/app: при следующем запуске Herd видит новый SHA256
+// (seedChecksum в .state.json) и пересоздаёт опубликованную версию.
+const STUDIO_ZIP_REL = path.join('resources', 'bin', 'herd-ai-widget.zip');
+
+function translateStudioWidget(workApp, studio = {}) {
+  const zipPath = path.join(workApp, STUDIO_ZIP_REL);
+  const allKeys = Object.keys(studio).filter(k => !k.startsWith('_'));
+  const result = { totalReplacements: 0, changedFiles: [], unusedKeys: allKeys };
+
+  if (!allKeys.length || !fs.existsSync(zipPath)) return result;
+
+  const lookup = buildStudioLookup(studio);
+  const archive = readZip(fs.readFileSync(zipPath), zipPath);
+  const stats = {
+    total: 0,
+    byKey: new Map(),
+    usedKeys: new Set(),
+    count(ru, file) {
+      this.total++;
+      if (!this.byKey.has(ru)) this.byKey.set(ru, new Set());
+      this.byKey.get(ru).add(file);
+    },
+  };
+
+  for (const entry of archive.entries) {
+    if (entry.isDirectory || !/^main-.*\.js$/.test(entry.name)) continue;
+
+    const src = entry.data.toString('utf8');
+    const out = translateFile(src, lookup, entry.name, stats);
+
+    if (out === src) continue;
+
+    try {
+      acorn.parse(out, { ecmaVersion: 'latest', sourceType: 'module' });
+    } catch (e) {
+      console.error(
+        '  !! синтаксическая ошибка в ' +
+          entry.name +
+          ' (виджет) после замены — файл откачен: ' +
+          e.message,
+      );
+      continue;
+    }
+
+    entry.data = Buffer.from(out, 'utf8');
+    result.changedFiles.push(entry.name);
+  }
+
+  // Главный бандл виджета отдаётся с Cache-Control: immutable по имени файла,
+  // поэтому если менять только содержимое main-*.js, браузер вечно отдаёт
+  // закешированную английскую копию. Переименовываем чанк по хэшу содержимого
+  // (как это делает Rollup), и имя в URL меняется вместе с переводом.
+  const mainEntry = archive.entries.find(e => !e.isDirectory && /^main-.*\.js$/.test(e.name));
+  if (result.changedFiles.length && mainEntry) {
+    const oldName = mainEntry.name;
+    const hash = crypto.createHash('sha1').update(mainEntry.data).digest('hex').slice(0, 8);
+    const newName = `main-${hash}.js`;
+
+    if (newName !== oldName) {
+      mainEntry.name = newName;
+
+      for (const e of archive.entries) {
+        if (e === mainEntry || e.isDirectory) continue;
+        const s = e.data.toString('utf8');
+        const updated = s.split('./' + oldName).join('./' + newName);
+        if (updated !== s) e.data = Buffer.from(updated, 'utf8');
+      }
+
+      result.changedFiles = result.changedFiles.map(n => (n === oldName ? newName : n));
+    }
+  }
+
+  if (result.changedFiles.length) {
+    const tmp = zipPath + '.tmp';
+
+    fs.writeFileSync(tmp, writeZip(archive.entries));
+    fs.rmSync(zipPath, { force: true });
+    fs.renameSync(tmp, zipPath);
+  }
+
+  result.totalReplacements = stats.total;
+  result.unusedKeys = allKeys.filter(k => !stats.usedKeys.has(k));
+  return result;
+}
+
+function studioWidgetMeta(zipPath) {
+  try {
+    const archive = readZip(fs.readFileSync(zipPath), zipPath);
+    const entry = archive.entries.find(e => e.name === 'version.json');
+
+    return entry ? JSON.parse(entry.data.toString('utf8')) : null;
+  } catch {
+    return null;
+  }
+}
+
+function isNewerStudioWidget(candidate, current) {
+  if (!current) return true;
+  if (!candidate) return false;
+
+  const a = Date.parse(candidate.builtAt);
+  const b = Date.parse(current.builtAt);
+
+  if (!Number.isNaN(a) && !Number.isNaN(b)) return a > b;
+
+  return (
+    String(candidate.version).localeCompare(String(current.version), 'en', { numeric: true }) > 0
+  );
+}
+
+// Herd обновляет herd-ai-widget.zip отдельно от app.asar (WidgetUpdater), поэтому
+// в backup/app.asar.orig.unpacked может лежать более старая версия виджета, чем в
+// Program Files. Для сборки берём самый свежий вариант: иначе pack/install вернут
+// старый бандл, а Herd затем перезапишет его из сети — вместе с переводом.
+function syncStudioWidgetFromInstalled({
+  workApp = WORK_APP,
+  installedAsar = INSTALLED_ASAR,
+} = {}) {
+  const source = path.join(installedAsar + '.unpacked', STUDIO_ZIP_REL);
+  const target = path.join(workApp, STUDIO_ZIP_REL);
+
+  if (!fs.existsSync(source)) return false;
+
+  const fresh = isNewerStudioWidget(studioWidgetMeta(source), studioWidgetMeta(target));
+  if (fs.existsSync(target) && !fresh) return false;
+
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.copyFileSync(source, target);
+  return true;
 }
 
 function cmdApply({ workApp = WORK_APP, dictPath = DICT_PATH, reportPath = REPORT_PATH } = {}) {
@@ -923,7 +1100,26 @@ function cmdApply({ workApp = WORK_APP, dictPath = DICT_PATH, reportPath = REPOR
   // 4) Шим главного процесса (меню трея, диалоги, уведомления из байткода)
   installMainShim(lookup.main, workApp);
 
-  // 5) Отчёт: использованные и неиспользованные ключи
+  // 5) Herd Studio: строки встроенного виджета в resources/bin/herd-ai-widget.zip
+  const studio = translateStudioWidget(workApp, lookup.studio);
+
+  if (studio.changedFiles.length)
+    log(
+      'Студия: заменено строк ' +
+        studio.totalReplacements +
+        ' в ' +
+        studio.changedFiles.length +
+        ' файлах виджета',
+    );
+  if (studio.unusedKeys.length)
+    log(
+      'Студия: ключи без совпадений (' +
+        studio.unusedKeys.length +
+        '): ' +
+        studio.unusedKeys.join(', '),
+    );
+
+  // 6) Отчёт: использованные и неиспользованные ключи
   const allKeys = Object.keys(JSON.parse(fs.readFileSync(dictPath, 'utf8')).translations);
   const unused = allKeys.filter(k => !stats.usedKeys.has(k));
   const report = {
@@ -933,6 +1129,11 @@ function cmdApply({ workApp = WORK_APP, dictPath = DICT_PATH, reportPath = REPOR
     htmlTitles: titleChanges,
     replacedKeys: Object.fromEntries([...stats.byKey].map(([ru, files]) => [ru, [...files]])),
     unusedKeys: unused,
+    studio: {
+      totalReplacements: studio.totalReplacements,
+      changedFiles: studio.changedFiles,
+      unusedKeys: studio.unusedKeys,
+    },
   };
 
   fs.mkdirSync(path.dirname(reportPath), { recursive: true });
@@ -980,12 +1181,17 @@ async function cmdPack({ workApp = WORK_APP, buildDir = BUILD_DIR } = {}) {
 
   if (fs.existsSync(UNPACKED_REF) && fs.existsSync(upDir)) {
     // Пути внутри unpacked сохраняют корневой каталог resources.
-    const built = builtFiles.map(rel => rel.replace(/\\/g, '/')).sort();
+    const ignored = f => matchPattern(f, UNPACKED_IGNORE);
+    const built = builtFiles
+      .map(rel => rel.replace(/\\/g, '/'))
+      .filter(f => !ignored(f))
+      .sort();
     const expected = fs
       .readFileSync(UNPACKED_REF, 'utf8')
       .split(/\r?\n/)
       .map(s => s.trim())
       .filter(Boolean)
+      .filter(f => !ignored(f))
       .sort();
     const missing = expected.filter(f => !built.includes(f));
     const extra = built.filter(f => !expected.includes(f));
@@ -1238,7 +1444,10 @@ if (require.main === module) {
 
 module.exports = {
   buildLookup,
+  buildStudioLookup,
   translateFile,
+  translateStudioWidget,
+  syncStudioWidgetFromInstalled,
   cmdApply,
   cmdPack,
   herdVersionOf,

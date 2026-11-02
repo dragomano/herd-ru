@@ -5,8 +5,9 @@
 
 Проект: неофициальный перевод Laravel Herd (Windows) на русский. `patch.js` заменяет
 строковые литералы в минифицированных чанках рендерера по словарю `dict/ru.json`,
-подменяет `<title>` в HTML-окнах, ставит рантайм-шим для строк главного процесса
-и пересобирает `app.asar`.
+подменяет `<title>` в HTML-окнах, ставит рантайм-шим для строк главного процесса,
+переводит бандл встроенного виджета Herd Studio (`herd-ai-widget.zip`) и пересобирает
+`app.asar`.
 
 ## Языки и стиль
 
@@ -35,9 +36,9 @@
 
 | Команда | Особенности |
 |---|---|
-| `extract` | Сначала сверяет бэкап, потом распаковывает `work/app` |
-| `apply` | Словарь + HTML-заголовки + `valueFixes` + шим; пишет `patches/apply-report.json` |
-| `pack` | `build/app.asar`; сверяет unpacked-состав с `patches/unpacked-files.txt` (210 файлов) |
+| `extract` | Сначала сверяет бэкап, потом распаковывает `work/app`; более новый `herd-ai-widget.zip` берёт из установленного `app.asar.unpacked` |
+| `apply` | Словарь + HTML-заголовки + `valueFixes` + шим + виджет Studio; пишет `patches/apply-report.json` |
+| `pack` | `build/app.asar`; сверяет unpacked-состав с `patches/unpacked-files.txt` (212 файлов) |
 | `install` | Закрывает Herd, копирует сборку (при необходимости через UAC), сверяет SHA256 |
 | `backup` | Снимок оригинала; `--force` — снять копию даже с пропатченного архива |
 | `restore` | Возвращает версию из бэкапа; при смене версии требует `--force` |
@@ -46,9 +47,10 @@
 ### Что проверять после `apply`
 
 `patches/apply-report.json`: `totalReplacements`, `changedJsFiles`, `htmlTitles`,
-`replacedKeys` и `unusedKeys`. Для Herd 2.0.4 эталон: 1364 замены в 25 чанках,
-11 заголовков, `unusedKeys` = только `["Downloading PHP ", "Local"]` (строки главного
-процесса, требуют ручного решения).
+`replacedKeys`, `unusedKeys` и `studio` (виджет). Для Herd 2.0.4 эталон: 1364 замены
+в 25 чанках, 11 заголовков, `unusedKeys` = только `["Downloading PHP ", "Local"]`
+(строки главного процесса, требуют ручного решения), `studio.totalReplacements` = 25
+в `main-*.js`, `studio.unusedKeys` пуст.
 
 `unusedKeys` имеет смысл **только на свежей распаковке**. После повторного `apply` по
 уже пропатченному дереву английские оригиналы не находятся, и отчёт показывает почти
@@ -59,7 +61,7 @@
 ## Словарь
 
 Секции `dict/ru.json`: `translations` (чанки рендерера), `htmlTitles`, `mainProcess`
-(шим), `valueFixes`, `skipChunks`.
+(шим), `studio` (виджет Herd Studio), `valueFixes`, `skipChunks`.
 
 ### Как работает замена (AST, Acorn)
 
@@ -118,6 +120,30 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 - Журнал шима: `%APPDATA%\Herd\ru-shim.log` (типы `menu`, `dialog`, `notification`,
   `deep`, `ipc`, `send`, `exec`). По нему видно, что реально приходит в API.
 
+### studio (виджет Herd Studio)
+
+Экран Herd Studio (вкладки Preview/Changes/Code/Application/Terminal, кнопки
+«Select element», «Close studio…») рисует встроенный виджет, а не рендерер Herd.
+Он лежит в `work/app/resources/bin/herd-ai-widget.zip` (бандл `main-*.js`), а при
+запуске Herd распаковывает его в `%USERPROFILE%\.config\herd\herd-ai-widget\versions\<версия>`
+и инжектит в страницы сайтов. Строк в `app.asar` и `index.jsc` нет, поэтому для них
+отдельная секция `studio`.
+
+- `apply` переводит только `main-*.js` внутри zip (по умолчанию `files: ["main-*"]`)
+  и пересобирает архив; `pack` кладёт его в `app.asar.unpacked`, `install` копирует.
+- `extract` берёт более новый `herd-ai-widget.zip` из установленного
+  `app.asar.unpacked`: Herd обновляет виджет отдельно от `app.asar` (WidgetUpdater),
+  и в `backup/app.asar.orig.unpacked` может лежать старая версия.
+- Herd пересоздаёт опубликованную версию, когда меняется SHA256 zip (`seedChecksum`
+  в `.state.json`), поэтому после `install` достаточно запустить Herd. Если виджет
+  обновится из сети, перевод слетит — повторите `npm run patch`.
+- В `main-*.js` есть код редактора (Monaco/VS Code), где английские литералы —
+  идентификаторы. Поэтому не подключайте сюда весь `translations`: секция `studio`
+  должна оставаться точечной. AST-правила (ключи объектов, сравнения, `case`)
+  действуют и здесь; `aria-label` и `data-tooltip` — обычные значения, их можно
+  переводить.
+- В отчёте: `studio.totalReplacements`, `studio.changedFiles`, `studio.unusedKeys`.
+
 ## Правила перевода
 
 - Не переводить: ключи логики, значения enum/`case`, payload-имена
@@ -172,7 +198,7 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 3. `npm run apply` — посмотреть отчёт: резкое падение `totalReplacements` или рост
    `unusedKeys` означает, что Herd переименовал чанки/строки; разбираться через
    `node patches/analyze-strings.js fresh|remaining|unused`.
-4. `npm run pack` — сверить, что unpacked-файлов 210 и состав совпал с эталоном;
+4. `npm run pack` — сверить, что unpacked-файлов 212 и состав совпал с эталоном;
    при расхождении обновить `patches/unpacked-files.txt`.
 5. `npm run install-patch && npm run launch` — установить и проверить интерфейс.
 
@@ -213,6 +239,7 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 | `tests/pipeline.test.js` | `apply`/`pack` на фикстурах: отчёт, откат при ошибке синтаксиса, ASAR и unpacked |
 | `tests/backup.test.js` | Снимок бэкапа, пропуск пропатченного архива, `--force`, выбор исходника `extract`, чтение версии |
 | `tests/unused-keys.test.js` | Классификация `unusedKeys` |
+| `tests/studio.test.js` | Виджет Herd Studio: перевод `main-*.js` в zip, идемпотентность, откат при ошибке, выбор свежей версии из установленного `app.asar.unpacked` |
 
 Правила:
 
@@ -222,7 +249,8 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 - **Всегда** проверяйте, что подставляемые пути лежат внутри временного каталога:
   однажды тест передал функции неверные имена параметров, та взяла реальные пути
   проекта и перезаписала `backup/app.asar.orig` пропатченным архивом.
-- Для внедрения путей `patch.js` экспортирует `buildLookup`, `translateFile`,
+- Для внедрения путей `patch.js` экспортирует `buildLookup`, `buildStudioLookup`,
+  `translateFile`, `translateStudioWidget`, `syncStudioWidgetFromInstalled`,
   `cmdApply`, `cmdPack`, `herdVersionOf`, `isPatchedAsar`, `pickExtractSource`,
   `restoreConflict`, `refreshOriginalBackup`. CLI-диспетчер срабатывает только при
   `require.main === module`, поэтому импорт патчера ничего не выполняет.

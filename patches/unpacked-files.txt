@@ -116,11 +116,6 @@ resources/config/pro/nginx/herd-studio.conf
 resources/config/valet/config.json
 resources/icon.png
 resources/valet/HerdConfiguration.php
-resources/valet/adminer/adminer.php
-resources/valet/adminer/index.php
-resources/valet/adminer/plugins/AdminerLoginPasswordLess.php
-resources/valet/adminer/plugins/FillLoginForm.php
-resources/valet/adminer/plugins/plugin.php
 resources/valet/box.json
 resources/valet/box.phar
 resources/valet/cli/.rnd
