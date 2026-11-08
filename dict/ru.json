@@ -339,7 +339,8 @@
       "ru": " и ",
       "files": [
         "settings-*",
-        "dumps-*"
+        "dumps-*",
+        "logViewer-*"
       ]
     },
     "Services": {
@@ -492,28 +493,6 @@
     },
     "Local branch": {
       "ru": "Локальная ветка",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "SortMenuFlyout-*"
-      ]
-    },
-    "Remote (origin)": {
-      "ru": "Удалённая ветка (origin)",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -2275,28 +2254,6 @@
         "SortMenuFlyout-*"
       ]
     },
-    "Run in a new workspace": {
-      "ru": "Запустить в новой рабочей области",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "SortMenuFlyout-*"
-      ]
-    },
     "Show fewer": {
       "ru": "Показать меньше",
       "files": [
@@ -4028,87 +3985,6 @@
         "providerCatalog-*"
       ]
     },
-    "Enable Herd Developer Tools": {
-      "ru": "Включить инструменты разработчика Herd",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Injects the &quot;Edit with Herd&quot; badge into your local .test sites so you can open the AI studio from any page.": {
-      "ru": "Добавляет значок &quot;Edit with Herd&quot; на локальные сайты .test, чтобы открывать ИИ-студию с любой страницы.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Shows the badge on all .test sites for access to Studio, terminal and more.": {
-      "ru": "Показывает значок на всех сайтах .test для доступа к студии, терминалу и многому другому.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "Notify when an agent finishes": {
       "ru": "Уведомлять о завершении агента",
       "files": [
@@ -4219,60 +4095,6 @@
     },
     "Enable Herd Studio": {
       "ru": "Включить Herd Studio",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Enable Herd's AI developer tools and connect the coding agents you want to build your sites with.": {
-      "ru": "Включите инструменты ИИ Herd и подключите агентов кодирования, с которыми будете создавать сайты.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Enable developer tools, notifications for AI agents and automatic tool updates.": {
-      "ru": "Инструменты разработчика, уведомления для ИИ-агентов и автоматические обновления инструментов.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -7379,33 +7201,6 @@
     },
     "Workspaces": {
       "ru": "Рабочие области",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Isolated copy on its own branch and domain — runs in parallel.": {
-      "ru": "Изолированная копия на своей ветке и домене — работает параллельно.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -11055,11 +10850,17 @@
     },
     "On": {
       "ru": "Вкл",
-      "files": "ProgressRing-*"
+      "files": [
+        "ProgressRing-*",
+        "ApplicationsInspector-*"
+      ]
     },
     "Off": {
       "ru": "Выкл",
-      "files": "ProgressRing-*"
+      "files": [
+        "ProgressRing-*",
+        "ApplicationsInspector-*"
+      ]
     },
     "Service": {
       "ru": "Сервис",
@@ -12168,33 +11969,6 @@
         "providerCatalog-*"
       ]
     },
-    "Configure Herd’s internal API server and port.": {
-      "ru": "Настройка внутреннего сервера API Herd и порта.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "Herd exposes an internal API for the CLI and other features. Make sure the port is open in your firewall.": {
       "ru": "Herd открывает внутренний API для CLI и других функций. Убедитесь, что порт открыт в брандмауэре.",
       "files": [
@@ -12872,33 +12646,6 @@
     },
     "The currently installed version of Herd.": {
       "ru": "Установленная версия Herd.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Based on": {
-      "ru": "На основе",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -13981,60 +13728,6 @@
         "providerCatalog-*"
       ]
     },
-    "Choose whether workspaces start from origin or the local branch.": {
-      "ru": "Откуда стартуют рабочие области: из origin или из локальной ветки.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Where new workspaces start from and where &quot;Update from main&quot; pulls from. The local branch includes commits you haven&#39;t pushed yet. Repositories without a remote always use the local branch.": {
-      "ru": "Откуда стартуют новые рабочие области и откуда обновляет «Update from main». Локальная ветка включает ещё не отправленные коммиты. Репозитории без remote всегда используют локальную ветку.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "Let your coding agents see the queries, logs, jobs, dumps and HTTP calls of every request.": {
       "ru": "Позвольте агентам видеть запросы, логи, задачи, дампы и HTTP-вызовы каждого обращения.",
       "files": [
@@ -14819,33 +14512,6 @@
         "providerCatalog-*"
       ]
     },
-    "Set up Herd&#39;s system services for local domains and sites.": {
-      "ru": "Настроить системные службы Herd для локальных доменов и сайтов.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "Herd requires Administrator access once to serve local domains and manage its services.": {
       "ru": "Herd один раз запросит права администратора, чтобы обслуживать локальные домены и управлять службами.",
       "files": [
@@ -15008,33 +14674,6 @@
         "providerCatalog-*"
       ]
     },
-    "The local development environment that more than 85,000 PHP and Laravel developers trust every day.": {
-      "ru": "Локальное окружение, которому ежедневно доверяют более 85 000 PHP- и Laravel-разработчиков.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "All PHP projects placed in": {
       "ru": "Все PHP-проекты из папки",
       "files": [
@@ -15145,33 +14784,6 @@
     },
     "We recommend to automatically start Herd in the background so that your development environment just works.": {
       "ru": "Рекомендуем автоматически запускать Herd в фоне — тогда окружение просто работает.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Run in Background": {
-      "ru": "Запустить в фоне",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -15495,60 +15107,6 @@
         "providerCatalog-*"
       ]
     },
-    "Welcome": {
-      "ru": "Добро пожаловать",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "The biggest update to Herd since the introduction of services - and it's all free. Build Laravel applications with coding agents and deploy your apps directly to Laravel Cloud.": {
-      "ru": "Крупнейшее обновление Herd со времён появления сервисов — и всё бесплатно. Создавайте Laravel-приложения с агентами кодирования и публикуйте их прямо в Laravel Cloud.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "New in 2.0": {
       "ru": "Новое в 2.0",
       "files": [
@@ -15600,7 +15158,8 @@
         "SortMenuFlyout-*",
         "ConfirmModal.vue_*",
         "ErrorModal.vue_*",
-        "providerCatalog-*"
+        "providerCatalog-*",
+        "WhatsNewDevtoolsSiteMock.vue_*"
       ]
     },
     "See What's New": {
@@ -15738,33 +15297,6 @@
         "providerCatalog-*"
       ]
     },
-    "Add a pricing page": {
-      "ru": "Добавьте страницу с ценами",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "Choose": {
       "ru": "Выбрать",
       "files": [
@@ -15789,34 +15321,8 @@
         "SortMenuFlyout-*",
         "ConfirmModal.vue_*",
         "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Pricing": {
-      "ru": "Тарифы",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
+        "providerCatalog-*",
+        "WhatsNewDevtoolsSiteMock.vue_*"
       ]
     },
     "Advanced": {
@@ -15981,33 +15487,6 @@
         "providerCatalog-*"
       ]
     },
-    "Optimized for coding agents": {
-      "ru": "Оптимизировано для агентов кодирования",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "In Your Browser": {
       "ru": "В вашем браузере",
       "files": [
@@ -16059,7 +15538,8 @@
         "SortMenuFlyout-*",
         "ConfirmModal.vue_*",
         "ErrorModal.vue_*",
-        "providerCatalog-*"
+        "providerCatalog-*",
+        "WhatsNewDevtoolsSiteMock.vue_*"
       ]
     },
     "Open in Herd Studio": {
@@ -16086,7 +15566,8 @@
         "SortMenuFlyout-*",
         "ConfirmModal.vue_*",
         "ErrorModal.vue_*",
-        "providerCatalog-*"
+        "providerCatalog-*",
+        "WhatsNewDevtoolsSiteMock.vue_*"
       ]
     },
     "Are you sure you want Herd to download and replace the shared": {
@@ -16442,31 +15923,6 @@
         "SalePromoBanner.vue_*"
       ]
     },
-    "Chat": {
-      "ru": "Чат",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "SalePromoBanner.vue_*"
-      ]
-    },
     "Choose a different site…": {
       "ru": "Выбрать другой сайт…",
       "files": [
@@ -16693,7 +16149,7 @@
       ]
     },
     "Edit with": {
-      "ru": "Редактировать в",
+      "ru": "Изменить с помощью",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -16714,36 +16170,32 @@
         "updater-*",
         "upToDate-*",
         "SortMenuFlyout-*",
-        "SalePromoBanner.vue_*"
+        "SalePromoBanner.vue_*",
+        "W",
+        "h",
+        "a",
+        "t",
+        "s",
+        "N",
+        "e",
+        "w",
+        "D",
+        "v",
+        "o",
+        "l",
+        "S",
+        "i",
+        "M",
+        "c",
+        "k",
+        ".",
+        "u",
+        "_",
+        "*"
       ]
     },
     "Herd can show every dump() call, query, log, job and HTTP call from your sites in Insights. You don't need to change anything in your codebase.": {
       "ru": "Herd показывает в диагностике каждый вызов dump(), запрос, лог, задачу и HTTP-вызов ваших сайтов. Код при этом менять не нужно.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "SalePromoBanner.vue_*"
-      ]
-    },
-    "Herd connects with your own AI provider and is fully manageable via MCP and CLI so that your coding agent can use all features on its own.": {
-      "ru": "Herd подключается к вашему поставщику ИИ и полностью управляется через MCP и CLI, поэтому агент кодирования может использовать все функции самостоятельно.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -17440,12 +16892,6 @@
         "ApplicationsInspector-*"
       ]
     },
-    "DB copy": {
-      "ru": "Копия БД",
-      "files": [
-        "ApplicationsInspector-*"
-      ]
-    },
     "Deploy to Laravel Forge": "Развернуть в Laravel Forge",
     "Deploying to Forge…": "Развёртывание в Forge…",
     "Herd couldn't list the databases on this server": "Herd не смог получить список баз данных на этом сервере",
@@ -17535,36 +16981,6 @@
     },
     "The workspace could not be created.": "Не удалось создать рабочую область.",
     "This server has no databases yet. Name the one to create:": "На этом сервере ещё нет баз данных. Укажите имя, чтобы создать:",
-    "Uses ": {
-      "ru": "Использует ",
-      "files": [
-        "ApplicationsInspector-*"
-      ]
-    },
-    "Uses this site’s database": {
-      "ru": "Использует базу данных этого сайта",
-      "files": [
-        "ApplicationsInspector-*"
-      ]
-    },
-    "a copy of this site’s database": {
-      "ru": "копию базы данных этого сайта",
-      "files": [
-        "ApplicationsInspector-*"
-      ]
-    },
-    "its own empty database": {
-      "ru": "собственную пустую базу данных",
-      "files": [
-        "ApplicationsInspector-*"
-      ]
-    },
-    "own DB": {
-      "ru": "Своя БД",
-      "files": [
-        "ApplicationsInspector-*"
-      ]
-    },
     " Project default from herd.yml.": {
       "ru": " По умолчанию из herd.yml.",
       "files": [
@@ -17958,7 +17374,8 @@
     "I'll add a pricing section to the welcome page.": {
       "ru": "Добавлю на главную страницу раздел с тарифами.",
       "files": [
-        "whatsNew-*"
+        "whatsNew-*",
+        "WhatsNewDevtoolsSiteMock.vue_*"
       ]
     },
     "Default port": {
@@ -17977,6 +17394,1095 @@
       "ru": " Не удалось скачать обновление. Попробуйте ещё раз. ",
       "files": [
         "updater-*"
+      ]
+    },
+    "Free models": {
+      "ru": "Бесплатные модели",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Offer OpenCode's free models in every model picker, in Herd and in Studio.": {
+      "ru": "Предлагает бесплатные модели OpenCode в каждом выборе модели — в Herd и в Студии.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Turn Herd Studio on or off, show its badge on sites, get notified when agents finish and keep coding tools up to date.": {
+      "ru": "Включайте и выключайте Herd Studio, показывайте бейдж на сайтах, получайте уведомления о завершении агентов и обновляйте инструменты кодирования.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Turn on Herd Studio and connect the coding agents you want to build your sites with.": {
+      "ru": "Включите Herd Studio и подключите агентов кодирования, с которыми хотите строить свои сайты.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Start php artisan dev, or Vite and Pail, when you open a site. Sites can override this in their inspector.": {
+      "ru": "Запускать php artisan dev, Vite и Pail при открытии сайта. Сайт может переопределить это в своём инспекторе.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Auto-start dev servers": {
+      "ru": "Автозапуск dev-серверов",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Show the Herd Studio badge on sites": {
+      "ru": "Показывать бейдж Herd Studio на сайтах",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Choose whether new workspaces start from origin or the local branch.": {
+      "ru": "Откуда создаются новые рабочие области: из origin или из локальной ветки.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Remote branch (origin)": {
+      "ru": "Удалённая ветка (origin)",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Herd Server Port": {
+      "ru": "Порт сервера Herd",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Configure Herd’s internal API server and the Herd Server Port.": {
+      "ru": "Настройка внутреннего сервера API Herd и порта сервера Herd.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Settings most setups never need to change.": {
+      "ru": "Настройки, которые большинству конфигураций не нужно менять.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Show What's New Tour": {
+      "ru": "Показать тур «Что нового»",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    " Offers OpenCode&#39;s free models in every model picker, in Herd and in Studio. They work without a connected provider. ": {
+      "ru": " Предлагает бесплатные модели OpenCode в каждом выборе модели — в Herd и в Студии. Работают без подключённого поставщика. ",
+      "files": [
+        "settings-*"
+      ]
+    },
+    " Starts php artisan dev, or Vite and Pail, when you open a site. Sites with their own auto-start setting keep it. You always start the queue worker manually. Turning this off doesn&#39;t stop servers that are already running. ": {
+      "ru": " Запускает php artisan dev, Vite и Pail при открытии сайта. Сайты с собственной настройкой автозапуска сохраняют её. Воркер очереди вы всегда запускаете вручную. Выключение не останавливает уже работающие серверы. ",
+      "files": [
+        "settings-*"
+      ]
+    },
+    " Adds a small script to every page Herd serves. It shows the badge that opens Herd Studio for that site. Sites can override this in their inspector. ": {
+      "ru": " Добавляет небольшой скрипт на каждую страницу, которую отдаёт Herd. Бейдж открывает студию для этого сайта. Сайт может переопределить это в своём инспекторе. ",
+      "files": [
+        "settings-*"
+      ]
+    },
+    " &quot;Update from main&quot; in a workspace pulls from here too. Pick Local branch to include commits you haven&#39;t pushed yet. Repositories without a remote always use the local branch. On the command line, --local or --remote overrides this. ": {
+      "ru": " &quot;Update from main&quot; в рабочей области тоже подтягивает изменения отсюда. Выберите локальную ветку, чтобы включить незапушенные коммиты. Репозитории без remote всегда используют локальную ветку. В командной строке это переопределяют --local или --remote. ",
+      "files": [
+        "settings-*"
+      ]
+    },
+    "New workspaces start from": {
+      "ru": "Новые рабочие области создаются из",
+      "files": [
+        "settings-*"
+      ]
+    },
+    " A full copy of a site on its own Git branch, served at its own address like feature.mysite.test. Unlike a plain git worktree it comes with your .env, vendor and node_modules, and can get its own database, so it runs right away. Use it for your own feature work or let coding agents build in it. Run \"herd workspace\" in the site folder, or start one with Build with AI in the site inspector or the \"Edit with Herd\" badge. ": {
+      "ru": " Полная копия сайта на собственной ветке Git, доступная по своему адресу вроде feature.mysite.test. В отличие от обычного git worktree она включает ваш .env, vendor и node_modules и может получить свою базу данных, поэтому запускается сразу. Используйте её для своей работы над фичами или доверьте строительство агентам кодирования. Запустите \"herd workspace\" в папке сайта или создайте рабочую область через «Создать с ИИ» в инспекторе сайта или через бейдж «Изменить с помощью Herd». ",
+      "files": [
+        "settings-*"
+      ]
+    },
+    "Dev server auto-start": {
+      "ru": "Автозапуск dev-сервера",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Studio badge": {
+      "ru": "Бейдж Herd Studio",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    " Starts php artisan dev, or Vite and Pail, when you open this site in the browser. Off also stops what Herd runs for this site, including the queue worker. Default follows Settings → AI. New workspaces copy this setting. ": {
+      "ru": " Запускает php artisan dev, Vite и Pail при открытии этого сайта в браузере. Положение «Выкл» также останавливает всё, что Herd запустил для этого сайта, включая воркер очереди. По умолчанию — как в Настройки → ИИ. Новые рабочие области наследуют эту настройку. ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " Shows the Herd Studio badge on this site's pages, including its workspaces. Turn it off if it gets in the way or the site doesn't work right with it. Default follows Settings → AI. ": {
+      "ru": " Показывает бейдж Herd Studio на страницах этого сайта, включая его рабочие области. Выключите, если бейдж мешает или сайт работает с ним некорректно. По умолчанию — как в Настройки → ИИ. ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "This directory": {
+      "ru": "Этот каталог",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "A new workspace": {
+      "ru": "Новая рабочая область",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "New workspace": {
+      "ru": "Новая рабочая область",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Workspace": {
+      "ru": "Рабочая область",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Workspace · DB copy": {
+      "ru": "Рабочая область · копия БД",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Workspace · empty DB": {
+      "ru": "Рабочая область · пустая БД",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "No workspaces yet": {
+      "ru": "Рабочих областей пока нет",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " Isolated copies of this site on their own branch and domain. ": {
+      "ru": " Изолированные копии этого сайта на своей ветке и домене. ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "No commits yet": {
+      "ru": "Коммитов пока нет",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Not a git repository": {
+      "ru": "Не git-репозиторий",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Workspaces start from a commit. Commit your changes in this site, then try again.": {
+      "ru": "Рабочие области создаются от коммита. Закоммитьте изменения в этом сайте и попробуйте снова.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Workspaces are copies of a git repository. Run git init and commit your files in this site, then try again.": {
+      "ru": "Рабочие области — это копии git-репозитория. Выполните git init и закоммитьте файлы в этом сайте, затем попробуйте снова.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "The workspace could not be deleted.": {
+      "ru": "Не удалось удалить рабочую область.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Created the workspace, but not everything worked": {
+      "ru": "Рабочая область создана, но не всё прошло успешно",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Created “": {
+      "ru": "Создана «",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "”, but not everything worked": {
+      "ru": "», но не всё прошло успешно",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Could not open this workspace’s database.": {
+      "ru": "Не удалось открыть базу данных этой рабочей области.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Runs in an isolated copy on its own branch and domain, in parallel to this site.": {
+      "ru": "Работает в изолированной копии на своей ветке и домене, параллельно с этим сайтом.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Runs in this directory. Pick a new workspace to work on an isolated copy in parallel.": {
+      "ru": "Работает в этом каталоге. Выберите новую рабочую область, чтобы работать над изолированной копией параллельно.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Default (": {
+      "ru": "По умолчанию (",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "the new server": {
+      "ru": "новом сервере",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Dismiss": {
+      "ru": "Скрыть",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "AI in Your Workflow": {
+      "ru": "ИИ в вашем рабочем процессе",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Connect the AI provider of your choice without any additional costs to use the AI features of Herd.": {
+      "ru": "Подключите любого поставщика ИИ без дополнительных затрат, чтобы пользоваться ИИ-возможностями Herd.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "One switch for Studio": {
+      "ru": "Один переключатель для студии",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Enable or disable all Herd Studio tools and processes with one single switch.": {
+      "ru": "Включайте и выключайте все инструменты и процессы Herd Studio одним переключателем.",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Fine-grained auto-start": {
+      "ru": "Тонкая настройка автозапуска",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Pick which sites start their dev servers automatically.": {
+      "ru": "Выбирайте, какие сайты запускают свои dev-серверы автоматически.",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Quick access to Studio": {
+      "ru": "Быстрый доступ к студии",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Control which sites show the \"Open in Herd Studio\" button.": {
+      "ru": "Управляйте тем, на каких сайтах показывается кнопка «Открыть в Herd Studio».",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " Show the Herd Studio badge ": {
+      "ru": " Показывать бейдж Herd Studio ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " Shows the badge on your .test sites. ": {
+      "ru": " Показывает бейдж на ваших .test-сайтах. ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " You can change these any time in Settings → AI or in the individual site configuration. ": {
+      "ru": " Эти настройки можно в любой момент изменить в Настройки → ИИ или в конфигурации отдельного сайта. ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " Automatically start php artisan dev when you open a site. ": {
+      "ru": " Автоматически запускает php artisan dev при открытии сайта. ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " The biggest update to Herd since the introduction of services – and it's all free. Build Laravel applications with coding agents and deploy them directly to Laravel Cloud. Here's a quick tour of what's new. ": {
+      "ru": " Крупнейшее обновление Herd со времени появления сервисов — и всё это бесплатно. Создавайте Laravel-приложения с помощью агентов кодирования и публикуйте их напрямую в Laravel Cloud. Вот краткий тур по новинкам. ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Creating Workspace": {
+      "ru": "Создание рабочей области",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Cloning Directory": {
+      "ru": "Клонирование каталога",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Changing Branch": {
+      "ru": "Переключение ветки",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Securing Site": {
+      "ru": "Защита сайта",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Isolating to PHP 8.4": {
+      "ru": "Изоляция на PHP 8.4",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Updating .env": {
+      "ru": "Обновление .env",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Shipping Application to Laravel Cloud": {
+      "ru": "Публикация приложения в Laravel Cloud",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Bring your own AI": {
+      "ru": "Свой поставщик ИИ",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Use the provider you already have, powered by OpenCode.": {
+      "ru": "Используйте уже имеющегося поставщика — на движке OpenCode.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Parallel workspaces": {
+      "ru": "Параллельные рабочие области",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Let several agents work on the same app side by side.": {
+      "ru": "Пусть несколько агентов работают над одним приложением бок о бок.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Terminals, Vite and other dev processes": {
+      "ru": "Терминалы, Vite и другие dev-процессы",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    "Run them in Studio, right next to your site.": {
+      "ru": "Запускайте их в студии, прямо рядом с сайтом.",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    " The local development environment that more than 90,000 PHP and Laravel developers trust every day. ": {
+      "ru": " Локальное окружение для разработки, которому каждый день доверяют более 90 000 PHP- и Laravel-разработчиков. ",
+      "files": [
+        "onboarding-*"
+      ]
+    },
+    "Custom": {
+      "ru": "Свой",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Could not toggle the service": {
+      "ru": "Не удалось переключить сервис",
+      "files": [
+        "AiProviders-*",
+        "applications-*",
+        "ApplicationsBrowser-*",
+        "ApplicationsInspector-*",
+        "settings-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "menubar-*",
+        "onboarding-*",
+        "dictationRecorder-*",
+        "DictationCore-*",
+        "dumps-*",
+        "logs-*",
+        "logViewer-*",
+        "mails-*",
+        "whatsNew-*",
+        "updater-*",
+        "upToDate-*",
+        "SortMenuFlyout-*",
+        "ConfirmModal.vue_*",
+        "ErrorModal.vue_*",
+        "providerCatalog-*"
+      ]
+    },
+    " Favorites ": {
+      "ru": " Избранное ",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Dictation failed.": {
+      "ru": "Не удалось выполнить диктовку.",
+      "files": [
+        "dictationAudio-*"
+      ]
+    },
+    "No microphone was found.": {
+      "ru": "Микрофон не найден.",
+      "files": [
+        "dictationAudio-*"
+      ]
+    },
+    "Windows didn’t hand over the microphone. Check Settings → Privacy & security → Microphone, or whether another app is using it.": {
+      "ru": "Windows не передала микрофон. Проверьте Настройки → Конфиденциальность и защита → Микрофон, а также не занят ли он другим приложением.",
+      "files": [
+        "dictationAudio-*"
+      ]
+    },
+    " Couldn’t delete “": {
+      "ru": " Не удалось удалить «",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " Deleted “": {
+      "ru": " Удалено «",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "”, with something left over ": {
+      "ru": "», но что-то осталось ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " Couldn’t create workspace ": {
+      "ru": " Не удалось создать рабочую область ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " Run in ": {
+      "ru": " Запуск в ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " Setting up… ": {
+      "ru": " Настраивается… ",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    " occurrences between ": {
+      "ru": " вхождений между ",
+      "files": [
+        "logViewer-*"
+      ]
+    },
+    " Enable Studio, its coding agents, terminals and dev servers. ": {
+      "ru": " Включите Студию, её агентов кодирования, терминалы и dev-серверы. ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " Herd Studio, your way ": {
+      "ru": " Herd Studio по-вашему ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " New in 2.1 ": {
+      "ru": " Новое в 2.1 ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " Set up Herd the way you like to work – with or without Herd Studio. ": {
+      "ru": " Настройте Herd так, как вам удобно — с Herd Studio или без. ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " Workspace [bubbly-goose] is ready at [https://my-site-bubbly-goose.test]. ": {
+      "ru": " Рабочая область [bubbly-goose] готова на [https://my-site-bubbly-goose.test]. ",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    " Free with Herd ": {
+      "ru": " Бесплатно с Herd ",
+      "files": [
+        "onboarding-*"
+      ]
+    },
+    " Use the integrated agentic coding platform. ": {
+      "ru": " Используйте встроенную агентную платформу для кодинга. ",
+      "files": [
+        "onboarding-*"
+      ]
+    },
+    "Microphone access is off. Allow desktop apps to use the microphone in Windows Settings → Privacy & security → Microphone.": {
+      "ru": "Доступ к микрофону выключен. Разрешите классическим приложениям использовать микрофон в Параметры Windows → Конфиденциальность и защита → Микрофон.",
+      "files": [
+        "dictationAudio-*"
+      ]
+    },
+    " Studio, its coding agents, terminals and dev servers. MCP, Insights and workspaces keep working while it&#39;s off. ": {
+      "ru": " Студия, её агенты кодирования, терминалы и dev-серверы. MCP, Диагностика и рабочие области продолжают работать, даже когда студия выключена. ",
+      "files": [
+        "settings-*"
       ]
     }
   },
@@ -18333,7 +18839,6 @@
     "Share site publicly — connect Expose first": "Поделиться сайтом — сначала подключите Expose",
     "Share site publicly and copy the URL": "Поделиться сайтом и скопировать ссылку",
     "Sharing via Expose…": "Публикация через Expose…",
-    "Sharing via Expose": "Публикация через Expose",
     "Open current preview page in a new tab": "Открыть текущую страницу предпросмотра в новой вкладке",
     "Open in new tab": "Открыть в новой вкладке",
     "Reload preview": "Перезагрузить предпросмотр",
@@ -18351,17 +18856,132 @@
     "Connect Provider": "Подключить провайдера",
     "No microphone found.": "Микрофон не найден.",
     "Looking for microphones…": "Поиск микрофонов…",
-    "Microphone input": "Вход с микрофона",
-    "System Default": "Системная",
-    "Share site publicly — connect Expose first": "Поделиться сайтом — сначала подключите Expose",
-    "Share site publicly and copy the URL": "Поделиться сайтом и скопировать ссылку",
-    "Sharing via Expose…": "Публикация через Expose…",
-    "Open current preview page in a new tab": "Открыть текущую страницу предпросмотра в новой вкладке",
-    "Open in new tab": "Открыть в новой вкладке",
-    "Reload preview": "Перезагрузить предпросмотр",
-    "Stop loading": "Остановить загрузку",
-    "Recently viewed pages": "Недавно просмотренные страницы",
-    "Recently viewed": "Недавно просмотренные",
-    "Current": "Текущая"
+    "Share site and copy URL": "Опубликовать сайт и скопировать URL",
+    "Manage public share": "Управление публичным доступом",
+    "Public share": "Публичный доступ",
+    "Copy": "Копия",
+    "Empty": "Пустая",
+    "Gets its own copy of the main site’s database.": "Получает собственную копию базы данных основного сайта.",
+    "Gets its own empty database — run migrations from scratch.": "Получает собственную пустую базу — миграции выполняются с нуля.",
+    "New workspace": "Новая рабочая область",
+    "Open AI settings": "Открыть настройки ИИ",
+    "Open preview": "Открыть предпросмотр",
+    "Install now (restarts terminals)": "Установить сейчас (перезапустит терминалы)",
+    "Turn on": "Включить",
+    "Change": "Изменить",
+    "Don't auto-start": "Не запускать автоматически",
+    "Starts automatically": "Запускается автоматически",
+    " when you open this site": " при открытии этого сайта",
+    "Auto-start is off for this site": "Автозапуск выключен для этого сайта",
+    "Stays stopped until you start it": "Останавливается, пока вы его не запустите",
+    "Ask user": "Вопрос пользователю",
+    "Read page": "Чтение страницы",
+    "Todos": "Задачи",
+    "Console": "Консоль",
+    "Screenshot": "Скриншот",
+    "read the list": "читает список",
+    "Where this prompt runs": "Где выполняется этот запрос",
+    "Close": "Закрыть",
+    "Close (": "Закрыть (",
+    "Close (Esc)": "Закрыть (Esc)",
+    "Close — the conversation stays in history": "Закрыть — переписка останется в истории",
+    "Dismiss": "Скрыть",
+    "Dismiss console error": "Скрыть ошибку консоли",
+    "Dismiss error": "Скрыть ошибку",
+    "Error": "Ошибка",
+    "Undo": "Отменить",
+    "Redo": "Повторить",
+    "Undo stroke": "Отменить штрих",
+    "Redo stroke": "Вернуть штрих",
+    "Discard text edit": "Отменить правку текста",
+    "Discard (restores the original text)": "Отменить (вернёт исходный текст)",
+    "Stop editing text": "Остановить редактирование текста",
+    "Stop editing text (Esc)": "Остановить редактирование текста (Esc)",
+    "Put the files you edited back to how they were when you opened them": "Вернуть отредактированные файлы к состоянию на момент открытия",
+    "Show the agent's version. Yours is set aside, not lost.": "Показать версию агента. Ваша отложена в сторону, не потеряна.",
+    "Write my version over the agent's": "Записать мою версию поверх версии агента",
+    "Throw the set-aside version away": "Выбросить отложенную версию",
+    "New session": "Новая сессия",
+    "New session options": "Опции новой сессии",
+    "Delete session": "Удалить сессию",
+    "Sessions": "Сессии",
+    "This conversation hit an error": "В этой переписке произошла ошибка",
+    "The agent is waiting for your input": "Агент ждёт вашего ввода",
+    "Waiting for your input": "Ожидание вашего ввода",
+    "Agent working": "Агент работает",
+    "An AI agent is working in this app": "В этом приложении работает ИИ-агент",
+    "Stop the agent": "Остановить агента",
+    "Send to the running agent": "Отправить запущенному агенту",
+    "Attach a file": "Прикрепить файл",
+    "Remove attached element": "Убрать прикреплённый элемент",
+    "Remove attached image": "Убрать прикреплённое изображение",
+    "Files to include": "Файлы для включения",
+    "Setting up workspace": "Настройка рабочей области",
+    "Deleting workspace": "Удаление рабочей области",
+    "Keep workspace": "Оставить рабочую область",
+    "Workspace actions": "Действия с рабочей областью",
+    "Switch workspace": "Переключить рабочую область",
+    "Switch project": "Переключить проект",
+    "Herd Devtools": "Инструменты разработчика Herd",
+    "Show dev stack processes": "Показать процессы dev-стека",
+    "Annotate preview": "Аннотировать предпросмотр",
+    "Pick an element on the page": "Выбрать элемент на странице",
+    "Pick element": "Выбрать элемент",
+    "Site preview": "Предпросмотр сайта",
+    "Preview path": "Путь предпросмотра",
+    "Stage view": "Просмотр индекса",
+    "Refresh changes": "Обновить изменения",
+    "Commit options": "Опции коммита",
+    "Commit with message": "Закоммитить с сообщением",
+    "View options": "Опции просмотра",
+    "More tabs": "Ещё вкладки",
+    "More tools": "Ещё инструменты",
+    "Tools": "Инструменты",
+    "New entries": "Новые записи",
+    "Console error alerts": "Оповещения об ошибках консоли",
+    "Hide badge for this session": "Скрыть бейдж для этой сессии",
+    "Hide for this session": "Скрыть для этой сессии",
+    "Settings sections": "Разделы настроек",
+    "Search applications": "Поиск приложений",
+    "Resize panel": "Изменить размер панели",
+    "Resize panel height": "Изменить высоту панели",
+    "Resize panel width (left)": "Изменить ширину панели (слева)",
+    "Resize panel width (right)": "Изменить ширину панели (справа)",
+    "Resize sidebar": "Изменить размер боковой панели",
+    "Widget layout": "Макет виджета",
+    "Chat column": "Колонка чата",
+    "File actions": "Действия с файлом",
+    "Deploy to Laravel Cloud": "Развернуть в Laravel Cloud",
+    "Build": "Собрать",
+    "Prepare": "Подготовить",
+    "Release": "Релиз",
+    "Remove": "Удалить",
+    "A git worktree — it shares the main site’s repository": "Git-worktree — использует репозиторий основного сайта",
+    "An adopted git worktree — it shares the main site’s repository": "Подключённый git-worktree — использует репозиторий основного сайта",
+    "The branch the main site currently has checked out": "Ветка, которую сейчас использует основной сайт",
+    "This site doesn't ship a Herd-compatible php artisan dev (Laravel 13.25+), so Herd runs these individually.": "На этом сайте нет совместимого с Herd php artisan dev (Laravel 13.25+), поэтому Herd запускает их по отдельности.",
+    "Fit to size": "По размеру",
+    "Changelog": "Список изменений",
+    "Documentation": "Документация",
+    "Support": "Поддержка",
+    " Herd is a product by ": " Herd — продукт ",
+    " in partnership with ": " в партнёрстве с ",
+    " No OpenCode provider connected. Connect an AI provider in Settings. ": " Поставщик OpenCode не подключён. Подключите поставщика ИИ в настройках. ",
+    " Click to start a Laravel queue worker for this site. ": " Нажмите, чтобы запустить воркер очереди Laravel для этого сайта. ",
+    " Click to stream this site&#39;s Laravel logs in real time. ": " Нажмите, чтобы транслировать логи Laravel этого сайта в реальном времени. ",
+    "Describe a change, a feature, or a bug you want to fix.": "Опишите изменение, функцию или баг, который нужно исправить.",
+    "Describe your changes…": "Опишите свои изменения…",
+    "File name, or a path like app/Models/Post.php": "Имя файла или путь вроде app/Models/Post.php",
+    "Files to include — app/**, *.php": "Файлы для включения — app/**, *.php",
+    "Filter routes by URI or name…": "Фильтр маршрутов по URI или имени…",
+    "Filter…": "Фильтр…",
+    "Line number…": "Номер строки…",
+    "Search applications…": "Поиск приложений…",
+    "Type a command…": "Введите команду…",
+    "Type your answer…": "Введите ответ…",
+    "What should the agent change about this plan?": "Что агент должен изменить в этом плане?",
+    "Draws ": "Рисует ",
+    " and ": " и ",
+    " as single glyphs, if the font has them.": " как один символ, если шрифт их поддерживает."
   }
 }

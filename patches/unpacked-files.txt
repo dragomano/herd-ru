@@ -164,6 +164,7 @@ resources/valet/cli/Valet/MailPresenter.php
 resources/valet/cli/Valet/MailWaiter.php
 resources/valet/cli/Valet/Manifest.php
 resources/valet/cli/Valet/McpInstaller.php
+resources/valet/cli/Valet/MigrationFailed.php
 resources/valet/cli/Valet/Nginx.php
 resources/valet/cli/Valet/Path.php
 resources/valet/cli/Valet/PhpFpm.php

@@ -38,7 +38,7 @@
 |---|---|
 | `extract` | Сначала сверяет бэкап, потом распаковывает `work/app`; более новый `herd-ai-widget.zip` берёт из установленного `app.asar.unpacked` |
 | `apply` | Словарь + HTML-заголовки + `valueFixes` + шим + виджет Studio; пишет `patches/apply-report.json` |
-| `pack` | `build/app.asar`; сверяет unpacked-состав с `patches/unpacked-files.txt` (212 файлов) |
+| `pack` | `build/app.asar`; сверяет unpacked-состав с `patches/unpacked-files.txt` (211 файлов) |
 | `install` | Закрывает Herd, копирует сборку (при необходимости через UAC), сверяет SHA256 |
 | `backup` | Снимок оригинала; `--force` — снять копию даже с пропатченного архива |
 | `restore` | Возвращает версию из бэкапа; при смене версии требует `--force` |
@@ -146,6 +146,9 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 
 ## Правила перевода
 
+Принятая терминология и её переводы — в [GLOSSARY.md](GLOSSARY.md); новые
+термины добавляйте туда, чтобы чанки говорили одним языком.
+
 - Не переводить: ключи логики, значения enum/`case`, payload-имена
   (`Dump`, `Query`, `Request`, `Response`, `Job`, `Log`, `View`), имена сервисов
   (`Mail`, `Dumps`), CSS-классы, SVG-пути, иконки-лигатуры (`Next`, `Previous`),
@@ -185,8 +188,14 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 
 - `"Downloading PHP "` и `"Local"` — строки главного процесса, место показа не
   подтверждено; в `translations` оставлены намеренно.
-- `backup/app.asar.orig.unpacked` (~700 МБ) устарел: `restore` возвращает только
-  `app.asar`, распакованное дерево пересобирается при `pack`.
+- `backup` копирует только `app.asar`, но `extract` читает unpacked-файлы из
+  `backup/app.asar.orig.unpacked`. Если в новой версии Herd изменился состав или
+  содержимое unpacked (в 2.1.1 добавился `resources/valet/cli/Valet/MigrationFailed.php`),
+  после `npm run backup` обновите и этот каталог — из кэша апдейтера
+  (`%LOCALAPPDATA%\herd-updater\pending\Herd-<версия>-setup.exe`, это 7z-архив, внутри
+  `resources\app.asar.unpacked`; подлинность сверяется по sha512 из `update-info.json`,
+  а sha256 `app.asar` из установщика должен совпасть с `backup/app.asar.orig`).
+  Иначе `extract` упадёт на недостающем файле или молча возьмёт содержимое старой версии.
 
 ## Обновление Herd
 
@@ -198,7 +207,7 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 3. `npm run apply` — посмотреть отчёт: резкое падение `totalReplacements` или рост
    `unusedKeys` означает, что Herd переименовал чанки/строки; разбираться через
    `node patches/analyze-strings.js fresh|remaining|unused`.
-4. `npm run pack` — сверить, что unpacked-файлов 212 и состав совпал с эталоном;
+4. `npm run pack` — сверить, что unpacked-файлов 211 и состав совпал с эталоном;
    при расхождении обновить `patches/unpacked-files.txt`.
 5. `npm run install-patch && npm run launch` — установить и проверить интерфейс.
 

@@ -145,6 +145,13 @@ test('translates text nodes inside createStaticVNode html, leaving attributes in
   assert.equal(stats.replacements.length, 1);
 });
 
+test('recognizes minified static vnode helpers of the studio widget (nr, ji)', () => {
+  const source = 'const node = nr("<span class=\\"name\\">All projects</span>");';
+  const { output, stats } = translate(source, { 'All projects': 'Все проекты' });
+  assert.equal(output, 'const node = nr("<span class=\\"name\\">Все проекты</span>");');
+  assert.equal(stats.replacements.length, 1);
+});
+
 test('reports the dictionary key used for a padded replacement', () => {
   const { stats } = translate('const label = "  Add Site  ";', { 'Add Site': 'Добавить сайт' });
   assert.deepEqual([...stats.usedKeys], ['Add Site']);

@@ -798,7 +798,10 @@ function translateFile(src, lookup, chunkName, stats) {
       parent.type === 'CallExpression' &&
       parent.arguments[0] === node &&
       parent.callee.type === 'Identifier' &&
-      /^(?:_?createStaticVNode(?:\$\d+)?|ji)$/.test(parent.callee.name);
+      // минифицированные псевдонимы createStaticVNode зависят от сборки: ji — старый
+      // бандл виджета, nr — начиная с Herd 2.1.1; при переименовании строки студии
+      // перестают применяться (это видно по unusedKeys отчёта)
+      /^(?:_?createStaticVNode(?:\$\d+)?|ji|nr)$/.test(parent.callee.name);
     const translateHtml = html =>
       html.replace(
         /(>)([^<>]+)(?=<)/g,
