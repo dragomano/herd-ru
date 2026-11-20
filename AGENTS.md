@@ -47,10 +47,10 @@
 ### Что проверять после `apply`
 
 `patches/apply-report.json`: `totalReplacements`, `changedJsFiles`, `htmlTitles`,
-`replacedKeys`, `unusedKeys` и `studio` (виджет). Для Herd 2.0.4 эталон: 1364 замены
-в 25 чанках, 11 заголовков, `unusedKeys` = только `["Downloading PHP ", "Local"]`
-(строки главного процесса, требуют ручного решения), `studio.totalReplacements` = 25
-в `main-*.js`, `studio.unusedKeys` пуст.
+`replacedKeys`, `unusedKeys` и `studio` (виджет). Для Herd 2.2.0 эталон: 1662 замены
+в 27 чанках, 11 заголовков, `unusedKeys` = только `["Application", "Downloading PHP ",
+"Local"]` (строки главного процесса, требуют ручного решения),
+`studio.totalReplacements` = 564 в `main-*.js`, `studio.unusedKeys` пуст.
 
 `unusedKeys` имеет смысл **только на свежей распаковке**. После повторного `apply` по
 уже пропатченному дереву английские оригиналы не находятся, и отчёт показывает почти
@@ -97,6 +97,20 @@
 - если фикс перестал срабатывать, в логе будет `valueFixes применены в 0 файлах`,
   а в интерфейсе вернётся английский текст или логика (см. ниже);
 - добавили фикс — поправьте связанную запись в `translations` и наоборот.
+
+Herd 2.2.0 дробит надписи на части: тернарники (`is`/`are`, `files`) и шаблонные
+строки собирают предложение из нескольких кусков, которые словарь не может
+перевести вместе. Такие места правятся фиксами по коду — они идут после
+переводов, поэтому в `from` уже должен быть русский текст.
+
+Подпись может совпадать с ключом логики (как «Все» в «Диагностике»). Тогда
+переводится только отображение, а сам ключ остаётся английским: так сделано для
+групп «Favorites»/«Ungrouped» в списке приложений (строка — идентификатор
+группы, переводится только `toDisplayString(section.name)`).
+
+Короткие слова вроде `path` переводить нельзя: это же имя тега SVG, литералы
+`createBaseVNode("path", …)` словарь посчитает текстом. Такие метки правятся
+точечными фиксами по месту подписи.
 
 ### mainProcess (шим)
 
@@ -186,11 +200,13 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 
 ### Известные открытые пункты
 
-- `"Downloading PHP "` и `"Local"` — строки главного процесса, место показа не
-  подтверждено; в `translations` оставлены намеренно.
+- `"Application"`, `"Downloading PHP "` и `"Local"` — строки главного процесса, место
+  показа не подтверждено; в `translations` оставлены намеренно.
 - `backup` копирует только `app.asar`, но `extract` читает unpacked-файлы из
   `backup/app.asar.orig.unpacked`. Если в новой версии Herd изменился состав или
-  содержимое unpacked (в 2.1.1 добавился `resources/valet/cli/Valet/MigrationFailed.php`),
+  содержимое unpacked (в 2.1.1 добавился `resources/valet/cli/Valet/MigrationFailed.php`,
+  в 2.2.0 `resources/bin/expose.bat` и `expose.phar` сменились на `expose.exe`
+  и `expose-arm64.exe`),
   после `npm run backup` обновите и этот каталог — из кэша апдейтера
   (`%LOCALAPPDATA%\herd-updater\pending\Herd-<версия>-setup.exe`, это 7z-архив, внутри
   `resources\app.asar.unpacked`; подлинность сверяется по sha512 из `update-info.json`,
@@ -207,7 +223,7 @@ tooltip), `dialog.showMessageBox*` (title, message, detail, checkboxLabel, butto
 3. `npm run apply` — посмотреть отчёт: резкое падение `totalReplacements` или рост
    `unusedKeys` означает, что Herd переименовал чанки/строки; разбираться через
    `node patches/analyze-strings.js fresh|remaining|unused`.
-4. `npm run pack` — сверить, что unpacked-файлов 211 и состав совпал с эталоном;
+4. `npm run pack` — сверить, что unpacked-файлов 215 и состав совпал с эталоном;
    при расхождении обновить `patches/unpacked-files.txt`.
 5. `npm run install-patch && npm run launch` — установить и проверить интерфейс.
 

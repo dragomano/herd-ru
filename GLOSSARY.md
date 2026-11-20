@@ -36,6 +36,7 @@
 | Alias | Псевдоним |
 | Group / New Group | Группа / Новая группа |
 | Favorites | Избранное |
+| Ungrouped | Без группы (только отображение) |
 | Linked domains | Связанные домены |
 | Secured (HTTPS) | Защищён (HTTPS) |
 | Driver | драйвер («подходящий драйвер») |
@@ -65,6 +66,40 @@
 БД рабочих областей: «копия БД» и «пустая БД» — компактные формы только в
 бейджах; в предложениях — «база данных» полностью.
 
+## Клонирование репозитория (Herd 2.2.0)
+
+| EN | RU |
+|---|---|
+| Clone / Clone Repository | Клонировать / Клонировать репозиторий |
+| Clone into | Клонировать в |
+| Clone a repository | Клонировать репозиторий |
+| Branch / Default branch | Ветка / Ветка по умолчанию |
+| Project name | Название проекта |
+| Set up / Set Up / Skip Setup | Настроить / Настроить / Пропустить настройку |
+| Start Over / Keep Clone | Начать заново / Оставить клон |
+| Get Git for Windows | Скачать Git for Windows |
+| Setting up… / Cloning… | Настройка… / Клонирование… |
+| The project will be available as | Проект будет доступен как |
+| Leave as configured | Оставить как настроено |
+| Database name | Имя базы данных |
+| Run migrations / Seed the database | Выполнить миграции / Заполнить базу данных |
+| Catch mail in Herd | Ловить почту в Herd |
+| Let Herd set up the rest | Пусть Herd настроит остальное |
+| Herd Pro is paused | Herd Pro приостановлен |
+
+## Развёртывание (Forge / Laravel Cloud)
+
+| EN | RU |
+|---|---|
+| Link Forge Site… | Связать сайт Forge… |
+| Manage Forge links | Управление ссылками Forge |
+| Not linked to a Forge site. | Сайт не связан с Forge. |
+| Not deployed to Laravel Cloud yet. | Ещё не развёрнуто в Laravel Cloud. |
+| Checking Laravel Cloud… | Проверка Laravel Cloud… |
+| Deploy ended | Развёртывание завершилось |
+| never / in progress / failed | никогда / в процессе / сбой |
+| server / repo / branch / path / deployed / region | сервер / репозиторий / ветка / путь / развёрнуто / регион |
+
 ## Сервисы и базы данных
 
 | EN | RU |
@@ -72,6 +107,9 @@
 | Service | Сервис |
 | Database | База данных |
 | Cache & Queue | Кэш и очередь |
+| Queue | Очередь |
+| Cache | Кэш |
+| Broadcasting | Трансляции |
 | Storage | Хранилище |
 | Queue worker | воркер очереди |
 | Port / Base Port | Порт / Базовый порт |
@@ -138,6 +176,8 @@
 | Dismiss | Скрыть |
 | Search | Поиск |
 | Cancel / Save / Delete / Edit | Отмена / Сохранить / Удалить / Изменить |
+| Confirm / No | Подтвердить / Нет |
+| Studio (в списке приложений) | Студия |
 | Loading… | Загрузка… |
 | Learn more / Learn how… | Подробнее / Как устроено… |
 
@@ -149,7 +189,8 @@
   `composer`, `nvm`, `nginx`, `dnsmasq`, `dump()`, `herd workspace`.
 - Payload-имена и ключи логики: `Dump`, `Query`, `Request`, `Response`, `Job`,
   `Log`, `View`, значения `case`/enum, ключи объектов, операнды сравнений.
-- `Ungrouped` — идентификатор группы.
+- `Ungrouped` — идентификатор группы; переводится только отображение («Без
+  группы»), сам ключ в коде остаётся английским.
 - `Update from main` — название действия; в текстах оставляем в кавычках как есть.
 - Иконки-лигатуры (`Next`, `Previous`), CSS-классы, SVG-пути, шрифтовые глифы
   операторов (`=>`, `!=`) в подсказках редактора.

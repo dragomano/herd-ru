@@ -8,8 +8,8 @@ resources/bin/composer.bat
 resources/bin/composer.phar
 resources/bin/cpx.bat
 resources/bin/cpx.phar
-resources/bin/expose.bat
-resources/bin/expose.phar
+resources/bin/expose-arm64.exe
+resources/bin/expose.exe
 resources/bin/find-usable-php.php
 resources/bin/forge.bat
 resources/bin/forge.phar
@@ -42,10 +42,14 @@ resources/bin/nginx/contrib/vim/indent/nginx.vim
 resources/bin/nginx/contrib/vim/syntax/nginx.vim
 resources/bin/nginx/docs/CHANGES
 resources/bin/nginx/docs/CHANGES.ru
+resources/bin/nginx/docs/CODE_OF_CONDUCT.md
+resources/bin/nginx/docs/CONTRIBUTING.md
 resources/bin/nginx/docs/LICENSE
 resources/bin/nginx/docs/OpenSSL.LICENSE
 resources/bin/nginx/docs/PCRE.LICENCE
-resources/bin/nginx/docs/README
+resources/bin/nginx/docs/README.md
+resources/bin/nginx/docs/SECURITY.md
+resources/bin/nginx/docs/SUPPORT.md
 resources/bin/nginx/docs/zlib.LICENSE
 resources/bin/nginx/html/50x.html
 resources/bin/nginx/html/index.html

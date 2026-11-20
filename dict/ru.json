@@ -1,37 +1,297 @@
 {
-  "_readme": "Словарь локализации Herd (подход A: точная замена строковых литералов). Значение — строка (замена во всех чанках) или объект {\"ru\": ..., \"files\": [...]} с шаблонами имён файлов. Ключи подобраны так, чтобы не задеть ключи сравнения в коде (имена сервисов 'Mail'/'Dumps', payload-имена 'Query'/'Request'/'Response'/'Dump'/'View'/'Job'/'Log', значения case/moment 'Date', 'Favorites', 'General', CSS-классы, имена иконок-лигатур 'Next'/'Previous').",
+  "_readme": "Словарь локализации Herd (подход A: точная замена строковых литералов). Значение — строка (замена во всех чанках) или объект {\"ru\": ..., \"files\": [...]} с шаблонами имён файлов. Ключи подобраны так, чтобы не задеть ключи сравнения в коде (имена сервисов 'Mail'/'Dumps', payload-имена 'Query'/'Request'/'Response'/'Dump'/'View'/'Job'/'Log', значения case/moment 'Date', 'Favorites'/'Ungrouped' (идентификаторы групп — переводится только отображение, через valueFixes), 'General', CSS-классы, имена иконок-лигатур 'Next'/'Previous' ('Previous' переводится только в applications-* — кнопка мастера)). Если источник в чанке паддинговый (' в чате '), в переводе пробелов быть не должно: пробел приходит из самого литерала, лишний даёт двойной.",
   "translations": {
+    "A copy of .env.example": {
+      "ru": "Копия .env.example",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "A database named": {
+      "ru": "База данных с именем",
+      "files": [
+        "applications-*"
+      ]
+    },
     "About": "О программе",
     "Account": "Аккаунт",
     "Acknowledgements": "Благодарности",
     "Add": "Добавить",
+    "Add a pricing page": {
+      "ru": "Добавить страницу с ценами",
+      "files": [
+        "WhatsNewDevtoolsSiteMock*"
+      ]
+    },
     "Add Service": "Добавить сервис",
     "Add Site": "Добавить сайт",
     "Alias Name:": "Псевдоним:",
     "All sub-folders in these directories will be available via Herd.": "Все подпапки этих директорий будут доступны через Herd.",
+    "already exists on": {
+      "ru": "уже существует на",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Also serve as": {
+      "ru": "Также обслуживать как",
+      "files": [
+        "applications-*"
+      ]
+    },
     "An error occurred while activating your license. Please try again or reach out to our support.": "При активации лицензии произошла ошибка. Попробуйте ещё раз или обратитесь в поддержку.",
+    "and": {
+      "ru": "и",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "and try again.": {
+      "ru": "и попробуйте снова.",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Application": "Приложение",
+    "asks for Node": {
+      "ru": "требует Node",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Automatically start with Herd": "Запускать вместе с Herd",
     "Back": "Назад",
     "Base Port": "Базовый порт",
+    "Branch": {
+      "ru": "Ветка",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "branch": {
+      "ru": "ветка",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Broadcasting": {
+      "ru": "Трансляции",
+      "files": [
+        "ApplicationsInspector-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "whatsNew-*",
+        "WhatsNewDevtoolsSiteMock*"
+      ]
+    },
+    "Build the frontend": {
+      "ru": "Собрать фронтенд",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Cache": {
+      "ru": "Кэш",
+      "files": [
+        "ApplicationsInspector-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "whatsNew-*",
+        "WhatsNewDevtoolsSiteMock*"
+      ]
+    },
+    "Catch mail in Herd": {
+      "ru": "Ловить почту в Herd",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Chat": {
+      "ru": "Чат",
+      "files": [
+        "WhatsNewDevtoolsSiteMock*"
+      ]
+    },
     "Check for updates": "Проверить обновления",
+    "Checking Laravel Cloud…": {
+      "ru": "Проверка Laravel Cloud…",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
     "Choose custom folder": "Выбрать свою папку",
     "Choose Your Sites Folder": "Выберите папку для сайтов",
+    "Clone": {
+      "ru": "Клонировать",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Clone a Git repository and set it up in Herd": {
+      "ru": "Клонируйте Git-репозиторий и настройте его в Herd",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Clone a repository": {
+      "ru": "Клонировать репозиторий",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Clone into": {
+      "ru": "Клонировать в",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Clone Repository": {
+      "ru": "Клонировать репозиторий",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Cloned to": {
+      "ru": "Склонировано в",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Cloning": {
+      "ru": "Клонирование",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Cloning repository…": {
+      "ru": "Клонирование репозитория…",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Close": "Закрыть",
+    "composer install (no composer.lock, resolves fresh versions)": {
+      "ru": "composer install (нет composer.lock, версии выбираются заново)",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "composer install, from composer.lock": {
+      "ru": "composer install из composer.lock",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Configuration": "Конфигурация",
     "Configure the base port that PHP should use.": "Настройте порт, который PHP будет использовать в качестве базового.",
+    "Confirm": {
+      "ru": "Подтвердить",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
     "Connect": "Подключить",
     "Connected": "Подключено",
     "Continue": "Продолжить",
     "Continue?": "Продолжить?",
     "Copy mail .env": "Скопировать mail .env",
+    "Couldn’t check composer.json against the installed PHP versions.": {
+      "ru": "Не удалось проверить composer.json по установленным версиям PHP.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Couldn’t clone the repository": {
+      "ru": "Не удалось клонировать репозиторий",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Couldn’t load the branches:": {
+      "ru": "Не удалось загрузить ветки:",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Create": {
+      "ru": "Создать",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Create .env": {
+      "ru": "Создать .env",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Create .env from .env.example": {
+      "ru": "Создать .env из .env.example",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Create a new service": "Создать новый сервис",
+    "Create your first app above, or clone or link an existing project.": {
+      "ru": "Создайте первое приложение выше или склонируйте и подключите существующий проект.",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Dashboard": "Дашборд",
     "Database": "База данных",
+    "Database name": {
+      "ru": "Имя базы данных",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "DB_CONNECTION stays": {
+      "ru": "DB_CONNECTION остаётся",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Default": {
+      "ru": "По умолчанию",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Default branch": {
+      "ru": "Ветка по умолчанию",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Default Domain": "Домен по умолчанию",
     "Default IDE": "IDE по умолчанию",
     "Default Server": "Сервер по умолчанию",
     "Delete site": "Удалить сайт",
+    "Delete the clone, clone it again and go back to the setup": {
+      "ru": "Удалить клон, склонировать заново и вернуться к настройке",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Deploy ended": {
+      "ru": "Развёртывание завершилось",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "deployed": {
+      "ru": "развёрнуто",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Describe your first app above and Herd builds it for you — or clone or link an existing project.": {
+      "ru": "Опишите первое приложение выше — Herd создаст его сам. Или склонируйте и подключите существующий проект.",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Detecting sites...": "Ищем сайты...",
     "Documentation": "Документация",
     "documentation": {
@@ -44,27 +304,190 @@
     "Downloading PHP ": "Загрузка PHP ",
     "Downloading update": "Загрузка обновления",
     "Edit your service": "Изменить сервис",
+    "End of life": {
+      "ru": "Конец поддержки",
+      "files": [
+        "settings-*"
+      ]
+    },
+    "Enter an HTTPS or SSH clone URL, or owner/repo for GitHub.": {
+      "ru": "Введите HTTPS- или SSH-URL репозитория либо owner/repo для GitHub.",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Enter your email": "Введите ваш имейл",
     "Enter your license key": "Введите ключ лицензии",
     "Environment Variables": "Переменные окружения",
     "Failed to write to hosts file:": "Не удалось записать файл hosts:",
+    "Fill in yourself later:": {
+      "ru": "Заполните позже сами:",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "From GitHub or any Git host. Herd clones it and sets it up afterwards.": {
+      "ru": "С GitHub или любого Git-хостинга. Herd склонирует проект, а затем настроит его.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "generates an app key": {
+      "ru": "генерирует ключ приложения",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Get Git for Windows": {
+      "ru": "Скачать Git for Windows",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Get Herd Pro": "Получить Herd Pro",
+    "Git isn’t installed. Install Git for Windows from": {
+      "ru": "Git не установлен. Установите Git for Windows с",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Group Name:": "Название группы:",
     "Headers": "Заголовки",
     "Herd could not check whether this service binary is available.": "Herd не смог проверить, доступен ли бинарник этого сервиса.",
+    "Herd isolates the site to PHP": {
+      "ru": "Herd изолирует сайт на PHP",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Herd paths": "Пути Herd",
     "Herd Pro can create and manage services on your local machine with the click of a button. It doesn't get easier.": "Herd Pro создаёт сервисы на вашей машине и управляет ими одним кликом. Проще некуда.",
+    "Herd Pro creates the database and connects Redis, mail and the other services for you.": {
+      "ru": "Herd Pro создаёт базу данных и подключает Redis, почту и остальные сервисы.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Herd Pro is paused": {
+      "ru": "Herd Pro приостановлен",
+      "files": [
+        "settings-*",
+        "whatsNew-*"
+      ]
+    },
     "Herd was unable to reinstall the service binary.": "Herd не удалось переустановить бинарник сервиса.",
     "Herd was unable to update the service.": "Herd не удалось обновить сервис.",
+    "herd.yml also lists": {
+      "ru": "в herd.yml также указаны",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "in Browser": {
+      "ru": "в браузере",
+      "files": [
+        "ApplicationsBrowser-*"
+      ]
+    },
+    "in Herd Studio": {
+      "ru": "в Herd Studio",
+      "files": [
+        "ApplicationsBrowser-*"
+      ]
+    },
+    "Info": {
+      "ru": "Информация",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Inspecting": {
+      "ru": "Проверка",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Install": "Установить",
+    "Install Composer packages": {
+      "ru": "Установить пакеты Composer",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Install JavaScript packages": {
+      "ru": "Установить пакеты JavaScript",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Install NVM": "Установить NVM",
     "Installed": "Установлено",
     "Integrations": "Интеграции",
+    "It isn’t installed yet, so Herd installs it through nvm first.": {
+      "ru": "Он ещё не установлен, поэтому Herd сначала установит его через nvm.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Its": {
+      "ru": "Её",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Keep Clone": {
+      "ru": "Оставить клон",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Laravel Installer": "Установщик Laravel",
     "Launch Herd at login": "Запускать Herd при входе в систему",
+    "Leave as configured": {
+      "ru": "Оставить как настроено",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Let Herd set up the rest": {
+      "ru": "Пусть Herd настроит остальное",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Let's get started": "Начнём",
     "License Key": "Ключ лицензии",
     "Licensing": "Лицензия",
+    "Link aliases": {
+      "ru": "Псевдонимы",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Link Forge Site…": {
+      "ru": "Связать сайт Forge…",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Listed in herd.yml": {
+      "ru": "Указано в herd.yml",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Listing the installed Node.js versions failed:": {
+      "ru": "Не удалось получить список установленных версий Node.js:",
+      "files": [
+        "settings-*"
+      ]
+    },
+    "Loading branches…": {
+      "ru": "Загрузка веток…",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Local": "Локально",
     "Logs": {
       "ru": "Логи",
@@ -74,8 +497,57 @@
         "logs-*"
       ]
     },
+    "Mail, Insights, debugging, and Pro services come back on their own once your payment goes through.": {
+      "ru": "Почта, диагностика, отладка и Pro-сервисы вернутся сами, как только пройдёт оплата.",
+      "files": [
+        "settings-*",
+        "whatsNew-*"
+      ]
+    },
+    "MAIL_HOST 127.0.0.1, port": {
+      "ru": "MAIL_HOST 127.0.0.1, порт",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Mails": "Письма",
     "Mailserver": "Почтовый сервер",
+    "Manage Forge links": {
+      "ru": "Управление ссылками Forge",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Microphone": {
+      "ru": "Микрофон",
+      "files": [
+        "DictationCore-*"
+      ]
+    },
+    "Needs a .env.": {
+      "ru": "Нужен .env.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "No": {
+      "ru": "Нет",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "No composer.json or package.json found.": {
+      "ru": "Не найдены composer.json или package.json.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "No installed PHP version fits this project (": {
+      "ru": "Ни одна установленная версия PHP не подходит этому проекту (",
+      "files": [
+        "applications-*"
+      ]
+    },
     "No logs found.": "Логи не найдены.",
     "No organizations found for this account.": "Для этого аккаунта не найдено организаций.",
     "No service selected": "Сервис не выбран",
@@ -103,6 +575,12 @@
         "SortMenuFlyout-*"
       ]
     },
+    "Node version": {
+      "ru": "Версия Node",
+      "files": [
+        "applications-*"
+      ]
+    },
     "None": {
       "ru": "Нет",
       "files": [
@@ -127,8 +605,26 @@
         "SortMenuFlyout-*"
       ]
     },
+    "Not deployed to Laravel Cloud yet.": {
+      "ru": "Ещё не развёрнуто в Laravel Cloud.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Not linked to a Forge site.": {
+      "ru": "Сайт не связан с Forge.",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
     "Only show latest versions": "Показывать только последние версии",
     "Open": "Открыть",
+    "Other": {
+      "ru": "Другое",
+      "files": [
+        "ServiceSettingsCore-*"
+      ]
+    },
     "Path": {
       "ru": "Путь",
       "files": [
@@ -151,6 +647,13 @@
         "updater-*",
         "upToDate-*",
         "SortMenuFlyout-*"
+      ]
+    },
+    "Paused": {
+      "ru": "Приостановлено",
+      "files": [
+        "settings-*",
+        "whatsNew-*"
       ]
     },
     "PHP Version": {
@@ -180,46 +683,311 @@
     "Please select a folder": "Выберите папку",
     "Port": "Порт",
     "Preview": "Предпросмотр",
-    "Public IP": "Публичный IP",
+    "Pricing": {
+      "ru": "Цены",
+      "files": [
+        "WhatsNewDevtoolsSiteMock*"
+      ]
+    },
+    "Project name": {
+      "ru": "Название проекта",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Queue": {
+      "ru": "Очередь",
+      "files": [
+        "ApplicationsInspector-*",
+        "services-*",
+        "ServiceSettingsCore-*",
+        "whatsNew-*",
+        "WhatsNewDevtoolsSiteMock*"
+      ]
+    },
     "Quit": "Выход",
     "Raw": "Исходный",
+    "Recommended – even if you are already using coding agents.": {
+      "ru": "Рекомендуем — даже если вы уже используете агентов кодирования.",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
     "Record": "Записать",
     "Reconnect": "Переподключить",
     "Reconnect required": "Требуется переподключение",
     "Reconnecting...": "Переподключение...",
+    "region": {
+      "ru": "регион",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
     "Reinstall binary": "Переустановить бинарник",
     "Reinstall failed": "Не удалось переустановить",
     "Remove account connection": "Отвязать аккаунт",
+    "Removing the clone…": {
+      "ru": "Удаление клона…",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "repo": {
+      "ru": "репозиторий",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "requires PHP": {
+      "ru": "требует PHP",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Return": {
+      "ru": "Вернуться",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "Run migrations": {
+      "ru": "Выполнить миграции",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Save": "Сохранить",
     "Search": "Поиск",
+    "see composer.json": {
+      "ru": "см. composer.json",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Seed the database": {
+      "ru": "Заполнить базу данных",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Select server": "Выберите сервер",
     "Select site": "Выберите сайт",
     "Select Sites Folder": "Выбрать папку сайтов",
     "Serve over HTTPS": "Работать через HTTPS",
     "Server": "Сервер",
+    "server": {
+      "ru": "сервер",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Set Up": {
+      "ru": "Настроить",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Set up": {
+      "ru": "Настроить",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "sets APP_URL to": {
+      "ru": "устанавливает APP_URL на",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Setting up": {
+      "ru": "Настройка",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Setting up…": {
+      "ru": "Настройка…",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Settings": "Настройки",
+    "Setup didn’t finish": {
+      "ru": "Настройка не завершена",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Show the Herd Studio badge": {
+      "ru": "Показывать бейдж Herd Studio",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
     "Skip for now": "Пропустить",
+    "Skip Setup": {
+      "ru": "Пропустить настройку",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "Something went wrong while cloning or setting up the app.": {
+      "ru": "Что-то пошло не так при клонировании или настройке приложения.",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Start minimized as system tray application": "Запускать свёрнутым в системный трей",
+    "Start Over": {
+      "ru": "Начать заново",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Startup": "Запуск",
     "Status": "Статус",
+    "Step 2 of 2: database and services.": {
+      "ru": "Шаг 2 из 2: база данных и сервисы.",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Storage": "Хранилище",
+    "Studio": {
+      "ru": "Студия",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
     "Successfully wrote to hosts file": "Файл hosts успешно записан",
     "Terminal": "Терминал",
     "Text": "Текст",
+    "The project asks for Node": {
+      "ru": "Проект требует Node",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "The project will be available as": {
+      "ru": "Проект будет доступен как",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "The project’s": {
+      "ru": "Проект",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "The project’s herd.yml asks for PHP": {
+      "ru": "herd.yml проекта требует PHP",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "The project’s herd.yml lists": {
+      "ru": "herd.yml проекта указывает",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "The project’s herd.yml uses": {
+      "ru": "herd.yml проекта использует",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "The repository already has a .env; Herd leaves it as is.": {
+      "ru": "В репозитории уже есть .env — Herd оставит его как есть.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "The repository is cloned and ready in Herd.": {
+      "ru": "Репозиторий склонирован и готов в Herd.",
+      "files": [
+        "applications-*"
+      ]
+    },
     "This action cannot be undone.": "Это действие нельзя отменить.",
+    "This Node.js version no longer receives security updates.": {
+      "ru": "Эта версия Node.js больше не получает обновления безопасности.",
+      "files": [
+        "settings-*"
+      ]
+    },
+    "this server": {
+      "ru": "этом сервере",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "This stops": {
+      "ru": "Это отключит",
+      "files": [
+        "settings-*",
+        "whatsNew-*"
+      ]
+    },
     "troubleshooting docs": "документации по устранению неполадок",
+    "Turn Off": {
+      "ru": "Отключить",
+      "files": [
+        "settings-*",
+        "whatsNew-*"
+      ]
+    },
+    "Turn off Herd Studio?": {
+      "ru": "Отключить Herd Studio?",
+      "files": [
+        "settings-*",
+        "whatsNew-*"
+      ]
+    },
     "Unlicensed": "Без лицензии",
     "Unpin": "Открепить",
     "Update Herd automatically": "Обновлять Herd автоматически",
+    "Update Payment Method": {
+      "ru": "Обновить способ оплаты",
+      "files": [
+        "settings-*",
+        "whatsNew-*"
+      ]
+    },
     "Update PHP": "Обновить PHP",
     "Update to Laravel Herd ": "Обновить до Laravel Herd ",
     "Updates": "Обновления",
+    "Upgrade": {
+      "ru": "Обновить",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Upgrade to Herd Pro": "Перейти на Herd Pro",
     "Use default folder": "Использовать папку по умолчанию",
     "Use Herd's built-in mailserver to easily test and debug your application emails locally.": "Встроенный почтовый сервер Herd — простой способ тестировать и отлаживать письма приложения локально.",
     "Version": "Версия",
     "Versions": "Версии",
+    "Visit": {
+      "ru": "Открыть",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
+    },
+    "Warning": {
+      "ru": "Предупреждение",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Welcome to Herd": "Добро пожаловать в Herd",
+    "What is the name of your project?": {
+      "ru": "Как называется ваш проект?",
+      "files": [
+        "applications-*"
+      ]
+    },
     "Working": "Выполняется",
     "Yes": "Да",
     "You must select a folder for your sites when choosing the custom option.": "При выборе своей папки необходимо указать путь для сайтов.",
@@ -250,7 +1018,9 @@
     },
     "Previous": {
       "ru": "Назад",
-      "paddedOnly": true
+      "files": [
+        "applications-*"
+      ]
     },
     " of ": " из ",
     " Cancel ": " Отмена ",
@@ -2124,50 +2894,6 @@
     },
     "Delete workspace?": {
       "ru": "Удалить рабочую область?",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "SortMenuFlyout-*"
-      ]
-    },
-    "Visit Site": {
-      "ru": "Открыть сайт",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "SortMenuFlyout-*"
-      ]
-    },
-    "Last deployment": {
-      "ru": "Последнее развёртывание",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -5228,33 +5954,6 @@
         "providerCatalog-*"
       ]
     },
-    "Describe your first app above and Herd builds it for you — or link an existing project.": {
-      "ru": "Опишите первое приложение выше — Herd создаст его сам. Или подключите существующий проект.",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "Spin up MySQL, Redis, Typesense, Reverb, and more — in seconds. No manual install. No config.": {
       "ru": "Запустите MySQL, Redis, Typesense, Reverb и другие за секунды. Без ручной установки и настройки.",
       "files": [
@@ -6849,7 +7548,7 @@
       ]
     },
     "\" including all files on your file system.": {
-      "ru": " », включая все файлы на диске.",
+      "ru": "», включая все файлы на диске.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -6876,7 +7575,7 @@
       ]
     },
     "deleted as well, including": {
-      "ru": "также будут удалены, включая",
+      "ru": "включая",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -6894,12 +7593,7 @@
         "logViewer-*",
         "mails-*",
         "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
+        "SortMenuFlyout-*"
       ]
     },
     "Its workspace": {
@@ -6957,7 +7651,7 @@
       ]
     },
     "and chat history.": {
-      "ru": " и историю чата.",
+      "ru": "и историю чата.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -7712,33 +8406,6 @@
         "providerCatalog-*"
       ]
     },
-    "Open in Vapor": {
-      "ru": "Открыть в Vapor",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "Open Dashboard": {
       "ru": "Открыть панель",
       "files": [
@@ -7793,62 +8460,8 @@
         "providerCatalog-*"
       ]
     },
-    "Open the deployed site on Laravel Cloud": {
-      "ru": "Открыть развёрнутый сайт на Laravel Cloud",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
     "Open the deployment log on Forge": {
       "ru": "Открыть журнал развёртывания на Forge",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Open the site on your Forge server": {
-      "ru": "Открыть сайт на сервере Forge",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -7903,60 +8516,6 @@
     },
     "I've connected — refresh": {
       "ru": "Я подключился — обновить",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Link a Forge site…": {
-      "ru": "Связать сайт Forge…",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "Link another Forge site…": {
-      "ru": "Связать другой сайт Forge…",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -8091,7 +8650,7 @@
       ]
     },
     "on Laravel Forge.": {
-      "ru": " на Laravel Forge.",
+      "ru": "на Laravel Forge.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -8118,7 +8677,7 @@
       ]
     },
     "on Laravel Forge. Link it to deploy and manage the site from here.": {
-      "ru": " на Laravel Forge. Привяжите его, чтобы разворачивать сайт и управлять им отсюда.",
+      "ru": "на Laravel Forge. Привяжите его, чтобы разворачивать сайт и управлять им отсюда.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -8631,7 +9190,7 @@
       ]
     },
     "is ready to deploy from Herd.": {
-      "ru": " готов к развёртыванию из Herd.",
+      "ru": "готов к развёртыванию из Herd.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -8685,7 +9244,7 @@
       ]
     },
     "” is removed from this application's configuration. Nothing changes on Forge.": {
-      "ru": " » будет удалён из конфигурации приложения. На Forge ничего не изменится.",
+      "ru": "» будет удалён из конфигурации приложения. На Forge ничего не изменится.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -8766,7 +9325,7 @@
       ]
     },
     ". Commit the config to share it.": {
-      "ru": " . Зафиксируйте конфигурацию в Git, чтобы поделиться.",
+      "ru": ". Зафиксируйте конфигурацию в Git, чтобы поделиться.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -10363,7 +10922,7 @@
       ]
     },
     "and HTTP call from your sites will appear here, and your coding agents can read them too.": {
-      "ru": " и HTTP-вызовы ваших сайтов появятся здесь; их смогут читать и ваши агенты.",
+      "ru": "и HTTP-вызовы ваших сайтов появятся здесь; их смогут читать и ваши агенты.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -10633,7 +11192,7 @@
       ]
     },
     "output in the page and terminal": {
-      "ru": " — вывод также на странице и в терминале",
+      "ru": "— вывод также на странице и в терминале",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -11673,7 +12232,7 @@
       ]
     },
     "and requires admin access.": {
-      "ru": " и требует прав администратора.",
+      "ru": "и требует прав администратора.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -11916,7 +12475,7 @@
       ]
     },
     "for compatibility.": {
-      "ru": " о совместимости.",
+      "ru": "о совместимости.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -14702,7 +15261,7 @@
       ]
     },
     "will be automatically available in your browser via": {
-      "ru": " будут автоматически доступны в браузере через",
+      "ru": "будут автоматически доступны в браузере через",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -15598,7 +16157,7 @@
       ]
     },
     "binary?": {
-      "ru": " исполняемый файл?",
+      "ru": "исполняемый файл?",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -15679,7 +16238,7 @@
       ]
     },
     "— service data and configuration stay untouched.": {
-      "ru": " — данные сервисов и настройки останутся на месте.",
+      "ru": "— данные сервисов и настройки останутся на месте.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -15706,7 +16265,7 @@
       ]
     },
     "— your databases, service data, and configuration stay untouched.": {
-      "ru": " — базы данных, данные сервисов и настройки останутся на месте.",
+      "ru": "— базы данных, данные сервисов и настройки останутся на месте.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -15760,7 +16319,7 @@
       ]
     },
     ". Please switch to a different version first.": {
-      "ru": " . Сначала переключитесь на другую версию.",
+      "ru": ". Сначала переключитесь на другую версию.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -15787,34 +16346,7 @@
       ]
     },
     "· Port": {
-      "ru": " · Порт",
-      "files": [
-        "AiProviders-*",
-        "applications-*",
-        "ApplicationsBrowser-*",
-        "ApplicationsInspector-*",
-        "settings-*",
-        "services-*",
-        "ServiceSettingsCore-*",
-        "menubar-*",
-        "onboarding-*",
-        "dictationRecorder-*",
-        "DictationCore-*",
-        "dumps-*",
-        "logs-*",
-        "logViewer-*",
-        "mails-*",
-        "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
-        "SortMenuFlyout-*",
-        "ConfirmModal.vue_*",
-        "ErrorModal.vue_*",
-        "providerCatalog-*"
-      ]
-    },
-    "(failed)": {
-      "ru": "(сбой)",
+      "ru": "· Порт",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -15841,7 +16373,7 @@
       ]
     },
     "service detected": {
-      "ru": " — сервис обнаружен",
+      "ru": "— сервис обнаружен",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -15874,7 +16406,7 @@
       ]
     },
     ". Refine your search to narrow it down.": {
-      "ru": " . Уточните запрос, чтобы сузить результаты.",
+      "ru": ". Уточните запрос, чтобы сузить результаты.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -16545,7 +17077,7 @@
       ]
     },
     "to install the service manually.": {
-      "ru": " , чтобы установить службу вручную.",
+      "ru": ", чтобы установить службу вручную.",
       "files": [
         "AiProviders-*",
         "applications-*",
@@ -16663,10 +17195,9 @@
         "logViewer-*",
         "mails-*",
         "whatsNew-*",
-        "updater-*",
-        "upToDate-*",
         "SortMenuFlyout-*",
-        "SalePromoBanner.vue_*"
+        "SalePromoBanner.vue_*",
+        "PaymentProblemBanner.vue_*"
       ]
     },
     "Let&#39;s Go!": {
@@ -17086,7 +17617,8 @@
     " workspaces": {
       "ru": " рабочих областей",
       "files": [
-        "ApplicationsInspector-*"
+        "ApplicationsInspector-*",
+        "applications-*"
       ]
     },
     " are removed. Uncommitted changes are lost; the branch is kept in the parent repository.": {
@@ -18484,6 +19016,192 @@
       "files": [
         "settings-*"
       ]
+    },
+    "(default)": {
+      "ru": "(по умолчанию)",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "(global)": {
+      "ru": "(глобальная)",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "; Herd’s nvm isn’t set up, so the Node on your PATH is used.": {
+      "ru": "; nvm в Herd не настроен, поэтому используется Node из PATH.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", which Herd doesn’t offer.": {
+      "ru": ", которого нет в Herd.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", exactly what the lockfile pins": {
+      "ru": ", ровно как зафиксировано в lock-файле",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", no lockfile found": {
+      "ru": ", lock-файл не найден",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ". Pick what Herd should do next.": {
+      "ru": ". Выберите, что Herd сделает дальше.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ". Step 1 of 2: PHP, dependencies and .env.": {
+      "ru": ". Шаг 1 из 2: PHP, зависимости и .env.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ". Migrations would run against it and mix this project’s tables with what’s already there. Pick another name to start clean.": {
+      "ru": ". Миграции выполнялись бы поверх неё и смешали таблицы этого проекта с уже имеющимися. Выберите другое имя, чтобы начать с чистой базы.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "). Install one under Settings → PHP.": {
+      "ru": "). Установите подходящую в Настройках → PHP.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", which PHP": {
+      "ru": ", которую PHP",
+      "files": [
+        "applications-*"
+      ]
+    },
+    " doesn’t satisfy. Composer will refuse to install on it.": {
+      "ru": " не удовлетворяет. Composer откажется выполнять установку на ней.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", which isn’t installed yet. Herd installs it first, then isolates the site to it.": {
+      "ru": ", он ещё не установлен. Herd сначала установит его, а затем изолирует сайт на нём.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", so Herd isolates the site to it.": {
+      "ru": ", поэтому Herd изолирует сайт на нём.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", but": {
+      "ru": ", но",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", which Herd’s global PHP": {
+      "ru": ", а глобальный PHP в Herd",
+      "files": [
+        "applications-*"
+      ]
+    },
+    " doesn’t satisfy. ": {
+      "ru": " не удовлетворяет. ",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ". Herd stays on the global PHP": {
+      "ru": ". Herd остаётся на глобальном PHP",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ". With Herd Pro, Herd installs it and points .env at it.": {
+      "ru": ". С Herd Pro Herd установит её и укажет её в .env.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", so DB_CONNECTION stays": {
+      "ru": ", поэтому DB_CONNECTION остаётся",
+      "files": [
+        "applications-*"
+      ]
+    },
+    " as in .env.example": {
+      "ru": " как в .env.example",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", but the app has no": {
+      "ru": ", но у приложения нет",
+      "files": [
+        "applications-*"
+      ]
+    },
+    " database connection": {
+      "ru": " подключения к базе данных",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ". Herd only starts the service.": {
+      "ru": ". Herd только запускает сервис.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", so Herd uses it instead of the": {
+      "ru": ", поэтому Herd использует его вместо",
+      "files": [
+        "applications-*"
+      ]
+    },
+    " connection from .env.example.": {
+      "ru": " подключения из .env.example.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    " isn’t installed yet. Herd installs it first and points .env at it.": {
+      "ru": " ещё не установлен. Herd сначала установит его и укажет его в .env.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    ", as in .env.example. Herd doesn’t change it.": {
+      "ru": ", как в .env.example. Herd не меняет её.",
+      "files": [
+        "applications-*"
+      ]
+    },
+    "✓ Assets compiled": {
+      "ru": "✓ Ассеты собраны",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "✓ Environment synced": {
+      "ru": "✓ Окружение синхронизировано",
+      "files": [
+        "whatsNew-*"
+      ]
+    },
+    "(exit": {
+      "ru": "(код",
+      "files": [
+        "ApplicationsInspector-*"
+      ]
     }
   },
   "valueFixes": [
@@ -18492,6 +19210,37 @@
     },
     {
       "_note": "Фиксы ниже — постоянные, а не разовые: 1) в шаблоне Herd число стоит до текста (… ${others} other coding agent…), поэтому подсказку MCP словарём не собрать; 2) подписи кнопок авторизации (method.label) и заголовки полей провайдеров (prompt.message) приходят из реестра OpenCode — их нет в файлах Herd, поэтому русский текст подставляется при отрисовке, ключи должны совпадать с реестром посимвольно (оригиналы — в resources/bin/opencode.exe). Если Herd или OpenCode изменят тексты, фиксы перестанут срабатывать: в логе apply будет «valueFixes применены в 0 файлах», а в интерфейсе вернётся английский текст."
+    },
+    {
+      "_note": "Herd 2.2.0 разбил надписи на части (тернарники и шаблонные строки), поэтому словарь их не покрывает. Фиксы ниже правят код: глагол в предложении об удалении рабочих областей, подпись «files» в том же предложении, статусы развёртывания Forge и заголовки групп «Favorites»/«Ungrouped» в списке приложений (там же строка — ключ группы, поэтому переводится только отображение). Если Herd перепишет эти места, фиксы перестанут срабатывать: в логе apply будет «valueFixes применены в 0 файлах»."
+    },
+    {
+      "from": "workspacesToDelete.value.length === 1 ? \"is\" : \"are\"",
+      "to": "workspacesToDelete.value.length === 1 ? \"будет удалена,\" : \"будут удалены,\""
+    },
+    {
+      "from": "workspaceDatabasesToDelete.value ? \"файлы, базы данных\" : \"files\"",
+      "to": "workspaceDatabasesToDelete.value ? \"файлы, базы данных\" : \"файлы\""
+    },
+    {
+      "from": "ago ? `failed ${ago}` : \"failed\"",
+      "to": "ago ? `сбой ${ago}` : \"сбой\""
+    },
+    {
+      "from": "{ text: \"in progress\", danger: false }",
+      "to": "{ text: \"в процессе\", danger: false }"
+    },
+    {
+      "from": "{ text: \"never\", danger: false }",
+      "to": "{ text: \"никогда\", danger: false }"
+    },
+    {
+      "from": "toDisplayString(section.name)",
+      "to": "toDisplayString(section.name === \"Favorites\" ? \"Избранное\" : section.name === \"Ungrouped\" ? \"Без группы\" : section.name)"
+    },
+    {
+      "from": "add(\"path\", details.directory);",
+      "to": "add(\"путь\", details.directory);"
     },
     {
       "from": "agents.join(\" and \")",

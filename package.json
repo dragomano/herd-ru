@@ -1,7 +1,22 @@
 {
   "name": "herd-ru",
-  "version": "0.2",
+  "version": "0.3",
+  "author": "Bugo",
+  "license": "MIT",
+  "private": true,
+  "type": "commonjs",
   "description": "Unofficial dictionary-driven patcher that translates the Laravel Herd for Windows interface into Russian.",
+  "keywords": [
+    "laravel-herd",
+    "herd",
+    "localization",
+    "i18n",
+    "russian",
+    "electron",
+    "asar",
+    "patcher",
+    "windows"
+  ],
   "main": "patch.js",
   "scripts": {
     "test": "node --test \"tests/*.test.js\"",
@@ -21,29 +36,14 @@
     "launch": "node patch.js launch",
     "patch": "npm run extract && npm run apply && npm run pack && npm run install-patch && npm run launch"
   },
-  "keywords": [
-    "laravel-herd",
-    "herd",
-    "localization",
-    "i18n",
-    "russian",
-    "electron",
-    "asar",
-    "patcher",
-    "windows"
-  ],
-  "author": "Bugo",
-  "license": "MIT",
-  "private": true,
-  "type": "commonjs",
   "engines": {
     "node": ">=22.12.0"
   },
   "dependencies": {
-    "@electron/asar": "^4.3.1",
-    "acorn": "^8.18.0"
+    "@electron/asar": "^4.3.2",
+    "acorn": "^8.19.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.5.15"
+    "@biomejs/biome": "2.6.8"
   }
 }
